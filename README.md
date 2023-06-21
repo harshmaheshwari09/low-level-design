@@ -12,7 +12,8 @@ algorithms, and system design concepts.
 This section provides an overview of the questions included in the repository. Each question contains a link to the
 corresponding code implementation.
 
-1.Tic Tac Toe: [JAVA](java/switch-case-lld/src/com/switchcase/tic_tac_toe)
+1. General Game Design: [JAVA](java/switch-case-models/src/com/switchcase/games)
+2. Tic Tac Toe: [JAVA](java/switch-case-lld/tic_tac_toe)
 
 More questions will be added soon. Stay tuned!
 
