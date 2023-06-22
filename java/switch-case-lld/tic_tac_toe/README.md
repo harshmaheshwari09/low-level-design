@@ -54,6 +54,20 @@ a seamless experience for players, handles various game states, and allows for p
 
 ---
 
+## Usage
+
+To use the Tic Tac Toe low-level design solution, follow these steps:
+
+1. Clone this repository:
+   ```
+   https://github.com/harshmaheshwari09/low-level-design.git
+   ```
+2. Open the project in your favourite IDE.
+3. Navigate to [StartGame.java](StartGame.java)
+4. Run the file and follow the instructions to play the game.
+
+---
+
 ## Solution
 
 The solution for the Tic Tac Toe game is implemented [here](src/com/switchcase/games/model). It provides a low-level
@@ -61,14 +75,18 @@ design that focuses on the
 core components and interactions required for playing the game. The design includes classes for the game board, players,
 and game logic.
 
-The Board class represents the game board and provides methods to place markers, check for a win or draw, and display
-the current state of the board.
+The **Game** class orchestrates the game flow, alternating turns between the players and checking for a win or draw
+after each move. It also handles input validation and provides an interface for playing the game.
 
-The Player class represents a player and keeps track of their marker (X or O). It allows players to make moves by
+The **Board** class represents the game board and provides methods to place markers, check for a win or draw, and
+display the current state of the board.
+
+The **Player** class represents a player and keeps track of their marker (X or O). It allows players to make moves by
 selecting a position on the board.
 
-The Game class orchestrates the game flow, alternating turns between the players and checking for a win or draw after
-each move. It also handles input validation and provides an interface for playing the game.
+The **Piece** class represents the markers (X or O), used by the players. 
+
+![Inheritance Flow](resources/inheritance_flow.svg)
 
 For a detailed implementation and usage instructions, please refer [here](src/com/switchcase/games/model).
 
