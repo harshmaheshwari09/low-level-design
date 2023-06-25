@@ -3,11 +3,11 @@ import com.switchcase.games.model.TicTacToeGame;
 
 public class StartGame {
     public static void main(String[] args) {
-        Game game = new TicTacToeGame();
         try {
+            Game game = new TicTacToeGame();
             game.startGame();
-        } catch (Exception exception) {
-            System.out.println(exception.getMessage());
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
         }
     }
 }

@@ -4,5 +4,6 @@ public enum Result {
     WIN,
     LOSE,
     DRAW,
-    ONGOING;
+    ONGOING,
+    SAVE;
 }

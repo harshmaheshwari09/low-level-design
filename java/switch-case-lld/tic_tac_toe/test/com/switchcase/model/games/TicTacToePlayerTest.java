@@ -1,10 +1,9 @@
 package com.switchcase.model.games;
 
+import com.switchcase.games.model.TicTacToeBoard;
 import com.switchcase.games.model.TicTacToePlayer;
 import com.switchcase.games.util.TicTacToePiece;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -36,7 +35,7 @@ public class TicTacToePlayerTest {
         String input = "0 0";
         ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());;
         System.setIn(testIn);
-        Assertions.assertEquals(input, player.performOperation());
+        Assertions.assertEquals(input, player.performOperation(new TicTacToeBoard(3)));
         System.setIn(systemIn);
     }
 }

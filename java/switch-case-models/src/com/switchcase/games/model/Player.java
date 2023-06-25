@@ -1,13 +1,12 @@
 package com.switchcase.games.model;
 
-import com.switchcase.games.util.ConsoleManager;
+import com.switchcase.games.util.Result;
 
-import java.io.Console;
+import java.io.Serializable;
 
-public interface Player {
-    ConsoleManager CONSOLE = new ConsoleManager();
+public interface Player extends Serializable {
 
-    String performOperation();
+    Result performOperation(GameBase gameBase);
     String getPlayerName();
     GamePiece getPlayerPiece();
     int getPlayerInventory();

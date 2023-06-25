@@ -13,6 +13,9 @@ public class TicTacToeGameTest  {
 
     TicTacToeGame game = new MockTicTacToeGame();
 
+    public TicTacToeGameTest() throws Exception {
+    }
+
     @Test
     public void testGameCreation() {
         Assertions.assertNotNull(game);
