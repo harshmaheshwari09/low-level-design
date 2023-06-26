@@ -91,7 +91,4 @@ The **Piece** class represents the markers (X or O), used by the players.
 For a detailed implementation and usage instructions, please refer [here](src/com/switchcase/games/model).
 
 The image below provides a comprehensive visual representation of the game flow in detail.
-![Game FLow Image](resources/game_flow_chart.svg)
-This flow is inherited from the detailed flow of game design ([here](../../switch-case-models/src/com/switchcase/games))
-
-The corresponding code for the game design can be found [here.](src/com/switchcase/games/model)
+![Sequence Diagram](resources/sequence_diagram.svg)
