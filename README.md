@@ -19,6 +19,12 @@ More questions will be added soon. Stay tuned!
 
 ---
 
+## Good Reads: 
+
+* [Design Patterns](https://refactoring.guru/design-patterns)
+
+---
+
 ## Contributing
 
 Contributions welcome!

@@ -141,12 +141,6 @@ public abstract class GameController implements Game {
         String gameDirectory = ConsoleManager.readLine("Please enter the name under which you would like to save the game: ");
         Path saveDirectoryPath = getSaveDirectoryPath().resolve(gameDirectory);
 
-        // Create the parent directory if it doesn't exist
-        File directory = new File(saveDirectoryPath.toString());
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
-
         // saving player information
         int idx = 1;
         while (queue.size() > 0) {

@@ -1,5 +1,7 @@
 package com.switchcase.games.util;
 
+import com.switchcase.renting.service.util.CustomRuntimeException;
+
 import java.util.Scanner;
 import java.util.function.Function;
 
@@ -22,6 +24,9 @@ public class ConsoleManager {
             try {
                 String input = readLine(message);
                 return function.apply(input);
+            } catch (CustomRuntimeException exception) {
+                print(exception.getMessage());
+                operationStatus = OperationStatus.FAILURE;
             } catch (Exception exception) {
                 print(ExceptionReason.INVALID_INPUT_PROVIDED.getMessage());
                 operationStatus = OperationStatus.FAILURE;
