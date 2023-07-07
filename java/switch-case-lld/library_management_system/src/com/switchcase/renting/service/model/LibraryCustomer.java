@@ -20,7 +20,7 @@ public class LibraryCustomer extends User {
     }
 
     @Override
-    public void performOperation(Operation userOperation) {
+    public void performOperation(Operation userOperation, Properties serviceProperty) {
         System.out.print(userOperation);
     }
 }

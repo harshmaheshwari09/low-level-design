@@ -14,7 +14,7 @@ import java.util.Map;
 public class AuthenticationDB {
 
     private static AuthenticationDB obj;
-    private Map<String, Map<String, Integer>> credentials;
+    private Map<String, String> credentials;
 
     private AuthenticationDB() {
     }
@@ -27,6 +27,10 @@ public class AuthenticationDB {
     }
 
     private void loadDB(String filePath) throws IOException, ClassNotFoundException {
+        if (credentials != null) {
+            return;
+        }
+
         if (!Files.isRegularFile(Paths.get(filePath))) {
             credentials = new HashMap<>();
         } else {
@@ -34,7 +38,7 @@ public class AuthenticationDB {
         }
     }
 
-    public int validateCredentials(String filePath) throws IOException, ClassNotFoundException {
+    public String validateCredentials(String filePath) throws IOException, ClassNotFoundException {
         loadDB(filePath);
         ConsoleManager.print("\nPlease enter your credentials: ");
         String userName = ConsoleManager.getUserInput("\nUsername: ", input -> {
@@ -44,17 +48,15 @@ public class AuthenticationDB {
             throw CustomRuntimeException.userNotFoundException();
         });
 
-        int userId = ConsoleManager.getUserInput("Password: ", input -> {
-            if (credentials.get(userName).containsKey(input)) {
-                return credentials.get(userName).get(input);
+        return ConsoleManager.getUserInput("Password: ", input -> {
+            if (credentials.get(userName).equals(input)) {
+                return userName;
             }
             throw CustomRuntimeException.invalidPasswordException();
         });
-
-        return userId;
     }
 
-    public void registerNewUser(String filePath, int userId) throws IOException, ClassNotFoundException {
+    public String registerNewUser(String filePath) throws IOException, ClassNotFoundException {
         loadDB(filePath);
         ConsoleManager.print("\nPlease submit the details:");
         String userName = ConsoleManager.getUserInput("\nUsername: ", input -> {
@@ -69,7 +71,8 @@ public class AuthenticationDB {
             }
             throw CustomRuntimeException.invalidPasswordException();
         });
-        credentials.put(userName, Map.of(password, userId));
+        credentials.put(userName, password);
         Database.storeData(credentials, filePath);
+        return userName;
     }
 }

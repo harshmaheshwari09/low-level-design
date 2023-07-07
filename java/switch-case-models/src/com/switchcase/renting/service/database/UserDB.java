@@ -8,15 +8,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class UserDB {
 
     private static UserDB obj;
 
-    private Map<Integer, User> userDetails;
-    private Map<Integer, Set<Integer>> userReservations;
-    private Map<Integer, Set<Integer>> userBookings;
+    private Map<String, User> userDetails;
 
     private UserDB() {
     }
@@ -28,25 +25,24 @@ public class UserDB {
         return obj;
     }
 
-    public User loadUser(String filePath, int userId) throws IOException, ClassNotFoundException {
-        if (userDetails == null) {
-            userDetails = (Map) Database.loadData(filePath);
-        }
-        return userDetails.get(userId);
-    }
-
-    public int registerNewUser(String filePath, User user) throws IOException, ClassNotFoundException {
+    private void loadUserDetailsDB(String filePath) throws IOException, ClassNotFoundException {
         if (!Files.isRegularFile(Paths.get(filePath))) {
             userDetails = new HashMap<>();
         } else {
             userDetails = (Map) Database.loadData(filePath);
         }
+    }
 
+    public User loadUser(String filePath, String userName) throws IOException, ClassNotFoundException {
+        this.loadUserDetailsDB(filePath);
+        return userDetails.get(userName);
+    }
+
+    public void registerNewUser(String filePath, String userName, User user) throws IOException, ClassNotFoundException {
+        this.loadUserDetailsDB(filePath);
         user.buildName();
         user.buildLastName();
-        int userId = userDetails.size();
-        userDetails.put(userId, user);
+        userDetails.put(userName, user);
         Database.storeData(userDetails, filePath);
-        return userId;
     }
 }

@@ -20,7 +20,7 @@ public class AuthenticationService {
         switch (accessType) {
             case LOG_IN -> {
                 AuthenticationDB authenticationDB = AuthenticationDB.getInstance();
-                int userId =
+                String userName =
                     authenticationDB.validateCredentials(
                         getDataBaseFilePath(
                             user.getDatabaseLocation(serviceProperties),
@@ -32,23 +32,23 @@ public class AuthenticationService {
                         getDataBaseFilePath(
                             user.getDatabaseLocation(serviceProperties),
                             ServiceProperty.USER_INFO_DB_FILENAME),
-                        userId));
+                        userName));
             }
             case REGISTER -> {
-                UserDB userDB = UserDB.getInstance();
-                int userId =
-                    userDB.registerNewUser(
-                        getDataBaseFilePath(
-                            user.getDatabaseLocation(serviceProperties),
-                            ServiceProperty.USER_INFO_DB_FILENAME),
-                        user);
-
                 AuthenticationDB authenticationDB = AuthenticationDB.getInstance();
-                authenticationDB.registerNewUser(
+                String userName = authenticationDB.registerNewUser(
                     getDataBaseFilePath(
                         user.getDatabaseLocation(serviceProperties),
-                        ServiceProperty.AUTHENTICATION_DB_FILENAME),
-                    userId);
+                        ServiceProperty.AUTHENTICATION_DB_FILENAME));
+
+                UserDB userDB = UserDB.getInstance();
+                userDB.registerNewUser(
+                    getDataBaseFilePath(
+                        user.getDatabaseLocation(serviceProperties),
+                        ServiceProperty.USER_INFO_DB_FILENAME),
+                    userName, user);
+
+
             }
         }
     }

@@ -4,11 +4,17 @@ import com.switchcase.games.util.ConsoleManager;
 import com.switchcase.renting.service.util.CustomRuntimeException;
 import com.switchcase.renting.service.util.Operation;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Properties;
 
 public abstract class User implements Serializable {
     protected String name;
+
+    public String getName() {
+        return name;
+    }
+
     protected String lastName;
 
     public void buildName() {
@@ -60,5 +66,5 @@ public abstract class User implements Serializable {
 
     public abstract String getDatabaseLocation(Properties serviceProperty);
 
-    public abstract void performOperation(Operation userOperation);
+    public abstract void performOperation(Operation userOperation, Properties serviceProperty) throws IOException, ClassNotFoundException;
 }

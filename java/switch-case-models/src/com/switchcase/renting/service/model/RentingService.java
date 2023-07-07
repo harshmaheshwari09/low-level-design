@@ -17,7 +17,7 @@ public abstract class RentingService {
 
     public void startSession(User user) throws IOException, ClassNotFoundException {
         AuthenticationService.execute(user, serviceProperties);
-        OperationService.execute(user);
+        OperationService.execute(user, serviceProperties);
     }
 
     private void loadProperties() {
