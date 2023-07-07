@@ -11,12 +11,15 @@ public abstract class RentingService {
     
     Properties serviceProperties;
     
-    public RentingService(User user) throws IOException, ClassNotFoundException {
+    public RentingService() {
         loadProperties();
-        int userId = AuthenticationService.execute(user, serviceProperties);
-        System.out.print(user);
     }
-    
+
+    public void startSession(User user) throws IOException, ClassNotFoundException {
+        AuthenticationService.execute(user, serviceProperties);
+        OperationService.execute(user);
+    }
+
     private void loadProperties() {
         this.serviceProperties = new Properties();
         try (FileInputStream fileInputStream = new FileInputStream(getAbsolutePropertyFilePath())) {

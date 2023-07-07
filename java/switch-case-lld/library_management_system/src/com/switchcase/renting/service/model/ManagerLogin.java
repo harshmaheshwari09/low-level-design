@@ -4,10 +4,10 @@ import com.switchcase.games.util.ConsoleManager;
 
 import java.io.IOException;
 
-public class CustomerLogin {
+public class ManagerLogin {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        ConsoleManager.print("----------Welcome to CUSTOMER PORTAL----------");
+        ConsoleManager.print("----------Welcome to MANAGER PORTAL----------");
         RentingService rentingService = new LibraryManagement();
-        rentingService.startSession(new LibraryCustomer());
+        rentingService.startSession(new LibraryManager());
     }
 }

@@ -36,7 +36,7 @@ public class AuthenticationDB {
 
     public int validateCredentials(String filePath) throws IOException, ClassNotFoundException {
         loadDB(filePath);
-        ConsoleManager.print("\nPlease enter your credentials: \n");
+        ConsoleManager.print("\nPlease enter your credentials: ");
         String userName = ConsoleManager.getUserInput("\nUsername: ", input -> {
             if (credentials.containsKey(input)) {
                 return input;
@@ -63,7 +63,7 @@ public class AuthenticationDB {
             }
             throw CustomRuntimeException.userNameNotAvailableException();
         });
-        String password = ConsoleManager.getUserInput("\nPassword: ", input -> {
+        String password = ConsoleManager.getUserInput("Password: ", input -> {
             if (input.length() > 0) {
                 return input;
             }

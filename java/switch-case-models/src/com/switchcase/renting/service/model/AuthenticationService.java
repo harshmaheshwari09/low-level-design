@@ -10,32 +10,51 @@ import com.switchcase.renting.service.util.ServiceProperty;
 import java.io.IOException;
 import java.util.Properties;
 
-public abstract class AuthenticationService {
+public class AuthenticationService {
 
-    public static int execute(User user, Properties serviceProperties) throws IOException, ClassNotFoundException {
+    private AuthenticationService() {
+    }
+
+    public static void execute(User user, Properties serviceProperties) throws IOException, ClassNotFoundException {
         AccessType accessType = getAccessType();
-        Integer userId = null;
         switch (accessType) {
             case LOG_IN -> {
                 AuthenticationDB authenticationDB = AuthenticationDB.getInstance();
-                userId = authenticationDB.validateCredentials(getDataBaseFilePath(serviceProperties, ServiceProperty.AUTHENTICATION_DB));
+                int userId =
+                    authenticationDB.validateCredentials(
+                        getDataBaseFilePath(
+                            user.getDatabaseLocation(serviceProperties),
+                            ServiceProperty.AUTHENTICATION_DB_FILENAME));
 
                 UserDB userDB = UserDB.getInstance();
-                user.copy(userDB.loadUser(getDataBaseFilePath(serviceProperties, ServiceProperty.USER_INFO_DB), userId));
+                user.copy(
+                    userDB.loadUser(
+                        getDataBaseFilePath(
+                            user.getDatabaseLocation(serviceProperties),
+                            ServiceProperty.USER_INFO_DB_FILENAME),
+                        userId));
             }
             case REGISTER -> {
                 UserDB userDB = UserDB.getInstance();
-                userId = userDB.registerNewUser(getDataBaseFilePath(serviceProperties, ServiceProperty.USER_INFO_DB), user);
+                int userId =
+                    userDB.registerNewUser(
+                        getDataBaseFilePath(
+                            user.getDatabaseLocation(serviceProperties),
+                            ServiceProperty.USER_INFO_DB_FILENAME),
+                        user);
 
                 AuthenticationDB authenticationDB = AuthenticationDB.getInstance();
-                authenticationDB.registerNewUser(getDataBaseFilePath(serviceProperties, ServiceProperty.AUTHENTICATION_DB), userId);
+                authenticationDB.registerNewUser(
+                    getDataBaseFilePath(
+                        user.getDatabaseLocation(serviceProperties),
+                        ServiceProperty.AUTHENTICATION_DB_FILENAME),
+                    userId);
             }
         }
-        return userId;
     }
 
-    static String getDataBaseFilePath(Properties serviceProperty, String propertyType) {
-        return ServiceProperty.SRC_DIRECTORY + serviceProperty.getProperty(propertyType);
+    static String getDataBaseFilePath(String databaseLocation, String fileName) {
+        return ServiceProperty.SRC_DIRECTORY + databaseLocation + fileName;
     }
 
     static AccessType getAccessType() {

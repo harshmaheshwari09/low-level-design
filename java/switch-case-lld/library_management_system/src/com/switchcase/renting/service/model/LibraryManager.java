@@ -7,16 +7,16 @@ import com.switchcase.renting.service.util.ServiceProperty;
 
 import java.util.Properties;
 
-public class LibraryCustomer extends User {
+public class LibraryManager extends User {
 
     @Override
     public Operation[] getUserOperations() {
-        return LibraryOperations.getUserOperations();
+        return LibraryOperations.getManagerOperations();
     }
 
     @Override
     public String getDatabaseLocation(Properties serviceProperty) {
-        return serviceProperty.getProperty(ServiceProperty.USER_DATABASE_LOCATION) + "/customer/";
+        return serviceProperty.getProperty(ServiceProperty.USER_DATABASE_LOCATION) + "/manager/";
     }
 
     @Override
