@@ -17,6 +17,7 @@ public class ItemDetailsDB {
 
     private static final Random random = new Random();
     private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    private final static String ITEM_INFO_DB_FILENAME = "itemInfo.ser";
     private static ItemDetailsDB obj;
     private static Map<String, Item> itemDetailsDB;
     private static String dbLocation;
@@ -37,7 +38,7 @@ public class ItemDetailsDB {
         return ServiceProperty.SRC_DIRECTORY
             + serviceProperty.getProperty(ServiceProperty.USER_DATABASE_LOCATION)
             + "/item/"
-            + ServiceProperty.ITEM_INFO_DB_FILENAME;
+            + ITEM_INFO_DB_FILENAME;
     }
 
     private static void loadDB(String filePath) throws IOException, ClassNotFoundException {

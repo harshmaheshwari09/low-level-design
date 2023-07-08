@@ -18,9 +18,9 @@ public class AdminService {
         return obj;
     }
 
-    public void addItem(Item item, Properties serviceProperty) throws IOException, ClassNotFoundException {
+    public String addItem(Item item, Properties serviceProperty) throws IOException, ClassNotFoundException {
         ItemDB itemDB = ItemDB.getInstance();
-        itemDB.storeItem(item, serviceProperty);
+        return itemDB.storeItem(item, serviceProperty);
     }
 
     public boolean removeItem(int itemID) {

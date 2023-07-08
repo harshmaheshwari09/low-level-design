@@ -1,5 +1,6 @@
 package com.switchcase.renting.service.model;
 
+import com.switchcase.games.util.ConsoleManager;
 import com.switchcase.renting.service.user.User;
 import com.switchcase.renting.service.util.LibraryOperations;
 import com.switchcase.renting.service.util.Operation;
@@ -41,7 +42,8 @@ public class LibraryManager extends User {
             case ADD_BOOK -> {
                 Book book = Book.createNewBook();
                 adminService = AdminService.getInstance();
-                adminService.addItem(book, serviceProperty);
+                String bookId = adminService.addItem(book, serviceProperty);
+                ConsoleManager.print(String.format("======== BOOK(id# %s) ADDED SUCCESSFULLY ======", bookId));
             }
             case REMOVE_BOOK,
                 BLOCK_USER,

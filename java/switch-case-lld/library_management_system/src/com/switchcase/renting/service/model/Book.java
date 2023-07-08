@@ -1,17 +1,11 @@
 package com.switchcase.renting.service.model;
 
-import com.switchcase.games.util.ConsoleManager;
 import com.switchcase.renting.service.util.Genre;
 import com.switchcase.renting.service.util.Item;
 import com.switchcase.renting.service.util.Location;
 
-import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 public class Book extends Item {
 
-    Set<String> authers;
     Genre genre;
 
     public static Book createNewBook() {
@@ -32,22 +26,17 @@ public class Book extends Item {
     }
 
     private Book buildDateOfPublication() {
-        this.dateOfProduction = getDateOfProduction();
+        this.dateOfProduction = getDateOfProductionFromUser("Enter date of publication (dd/mm/yyyy): ");
         return this;
     }
 
     private Book buildAuthers() {
-        this.authers = ConsoleManager.getUserInput("Enter comma(\",\") separated names of Authers: ", input -> {
-            if (input.length() > 0) {
-                return Arrays.stream(input.trim().split(",")).map(String::trim).collect(Collectors.toSet());
-            }
-            throw new RuntimeException();
-        });
+        this.producers = getProducersFromUser("Enter comma(\",\") separated names of Authers: ");
         return this;
     }
 
     private Book buildTitle() {
-        this.title = getTitle("\nEnter the book title: ");
+        this.title = getTitleFromUser("\nEnter the book title: ");
         return this;
     }
 

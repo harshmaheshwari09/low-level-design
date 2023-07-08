@@ -12,6 +12,9 @@ import java.util.Properties;
 
 public class AuthenticationService {
 
+    private final static String USER_INFO_DB_FILENAME = "userInfo.ser";
+    private final static String AUTHENTICATION_DB_FILENAME = "authentication.ser";
+
     private AuthenticationService() {
     }
 
@@ -22,33 +25,23 @@ public class AuthenticationService {
                 AuthenticationDB authenticationDB = AuthenticationDB.getInstance();
                 String userName =
                     authenticationDB.validateCredentials(
-                        getDataBaseFilePath(
-                            user.getDatabaseLocation(serviceProperties),
-                            ServiceProperty.AUTHENTICATION_DB_FILENAME));
+                        getDataBaseFilePath(user.getDatabaseLocation(serviceProperties), AUTHENTICATION_DB_FILENAME));
 
                 UserDB userDB = UserDB.getInstance();
                 user.copy(
                     userDB.loadUser(
-                        getDataBaseFilePath(
-                            user.getDatabaseLocation(serviceProperties),
-                            ServiceProperty.USER_INFO_DB_FILENAME),
+                        getDataBaseFilePath(user.getDatabaseLocation(serviceProperties), USER_INFO_DB_FILENAME),
                         userName));
             }
             case REGISTER -> {
                 AuthenticationDB authenticationDB = AuthenticationDB.getInstance();
                 String userName = authenticationDB.registerNewUser(
-                    getDataBaseFilePath(
-                        user.getDatabaseLocation(serviceProperties),
-                        ServiceProperty.AUTHENTICATION_DB_FILENAME));
+                    getDataBaseFilePath(user.getDatabaseLocation(serviceProperties), AUTHENTICATION_DB_FILENAME));
 
                 UserDB userDB = UserDB.getInstance();
                 userDB.registerNewUser(
-                    getDataBaseFilePath(
-                        user.getDatabaseLocation(serviceProperties),
-                        ServiceProperty.USER_INFO_DB_FILENAME),
+                    getDataBaseFilePath(user.getDatabaseLocation(serviceProperties), USER_INFO_DB_FILENAME),
                     userName, user);
-
-
             }
         }
     }
