@@ -23,8 +23,9 @@ public class AdminService {
         return itemDB.storeItem(item, serviceProperty);
     }
 
-    public boolean removeItem(int itemID) {
-        return false;
+    public void removeItem(String itemID, Properties serviceProperty) throws IOException, ClassNotFoundException {
+        ItemDB itemDB = ItemDB.getInstance();
+        itemDB.removeItem(itemID,serviceProperty);
     }
 
     public boolean blockUser(int userID) {

@@ -1,6 +1,7 @@
 package com.switchcase.renting.service.database;
 
 import com.switchcase.database.model.Database;
+import com.switchcase.renting.service.util.CustomRuntimeException;
 import com.switchcase.renting.service.util.Item;
 import com.switchcase.renting.service.util.ServiceProperty;
 
@@ -69,5 +70,14 @@ public class ItemDetailsDB {
     public static void addNewItem(Item item, String itemID) throws IOException {
         itemDetailsDB.put(itemID, item);
         Database.storeData(itemDetailsDB, dbLocation);
+    }
+
+    public Item removeItem(String itemID) throws IOException {
+        if (!itemDetailsDB.containsKey(itemID)) {
+            throw CustomRuntimeException.invalidBookId();
+        }
+        Item removedItem = itemDetailsDB.remove(itemID);
+        Database.storeData(itemDetailsDB, dbLocation);
+        return removedItem;
     }
 }

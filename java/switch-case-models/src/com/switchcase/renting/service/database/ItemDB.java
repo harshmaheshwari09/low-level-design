@@ -1,6 +1,5 @@
 package com.switchcase.renting.service.database;
 
-import com.switchcase.games.util.ConsoleManager;
 import com.switchcase.renting.service.util.Item;
 
 import java.io.IOException;
@@ -28,12 +27,26 @@ public class ItemDB {
 
         // updating DB for auther -> {itemIDs}
         ProducerDetailsDB producerDetailsDB = ProducerDetailsDB.getInstance(serviceProperty);
-        producerDetailsDB.updateEntry(item.getProducers(), itemID);
+        producerDetailsDB.addEntry(item.getProducers(), itemID);
 
         // updating DB for title -> {itemIDs}
         TitleDetailsDB titleDetailsDB = TitleDetailsDB.getInstance(serviceProperty);
-        titleDetailsDB.updateEntry(item.getTitle(), itemID);
+        titleDetailsDB.addEntry(item.getTitle(), itemID);
 
         return itemID;
+    }
+
+    public void removeItem(String itemID, Properties serviceProperty) throws IOException, ClassNotFoundException {
+        // updating DB for id -> item
+        ItemDetailsDB itemDetailsDB = ItemDetailsDB.getInstance(serviceProperty);
+        Item removedItem = itemDetailsDB.removeItem(itemID);
+
+        // updating DB for auther -> {itemIDs}
+        ProducerDetailsDB producerDetailsDB = ProducerDetailsDB.getInstance(serviceProperty);
+        producerDetailsDB.removeEntry(removedItem.getProducers(), itemID);
+
+        // updating DB for title -> {itemIDs}
+        TitleDetailsDB titleDetailsDB = TitleDetailsDB.getInstance(serviceProperty);
+        titleDetailsDB.removeEntry(removedItem.getTitle(), itemID);
     }
 }

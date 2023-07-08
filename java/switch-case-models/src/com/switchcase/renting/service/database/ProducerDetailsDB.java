@@ -46,12 +46,22 @@ public class ProducerDetailsDB {
         }
     }
 
-    public void updateEntry(Set<String> producers, String itemID) throws IOException {
+    public void addEntry(Set<String> producers, String itemID) throws IOException {
         for (var producer : producers) {
             if (!producerDetailsDB.containsKey(producer)) {
                 producerDetailsDB.put(producer, new HashSet<>());
             }
             producerDetailsDB.get(producer).add(itemID);
+        }
+        Database.storeData(producerDetailsDB, dbLocation);
+    }
+
+    public void removeEntry(Set<String> producers, String itemID) throws IOException {
+        for (var producer : producers) {
+            producerDetailsDB.get(producer).remove(itemID);
+            if (producerDetailsDB.get(producer).size() == 0) {
+                producerDetailsDB.remove(producer);
+            }
         }
         Database.storeData(producerDetailsDB, dbLocation);
     }

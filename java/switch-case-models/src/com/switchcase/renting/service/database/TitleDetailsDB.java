@@ -46,11 +46,19 @@ public class TitleDetailsDB {
         }
     }
 
-    public void updateEntry(String title, String itemID) throws IOException {
+    public void addEntry(String title, String itemID) throws IOException {
         if (!titleDetailsDB.containsKey(title)) {
             titleDetailsDB.put(title, new HashSet<>());
         }
         titleDetailsDB.get(title).add(itemID);
+        Database.storeData(titleDetailsDB, dbLocation);
+    }
+
+    public void removeEntry(String title, String itemID) throws IOException {
+        titleDetailsDB.get(title).remove(itemID);
+        if (titleDetailsDB.get(title).size() == 0) {
+            titleDetailsDB.remove(title);
+        }
         Database.storeData(titleDetailsDB, dbLocation);
     }
 }

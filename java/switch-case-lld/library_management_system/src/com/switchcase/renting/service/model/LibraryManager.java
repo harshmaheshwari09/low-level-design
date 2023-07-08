@@ -2,6 +2,7 @@ package com.switchcase.renting.service.model;
 
 import com.switchcase.games.util.ConsoleManager;
 import com.switchcase.renting.service.user.User;
+import com.switchcase.renting.service.util.CustomRuntimeException;
 import com.switchcase.renting.service.util.LibraryOperations;
 import com.switchcase.renting.service.util.Operation;
 import com.switchcase.renting.service.util.ServiceProperty;
@@ -45,8 +46,23 @@ public class LibraryManager extends User {
                 String bookId = adminService.addItem(book, serviceProperty);
                 ConsoleManager.print(String.format("======== BOOK(id# %s) ADDED SUCCESSFULLY ======", bookId));
             }
-            case REMOVE_BOOK,
-                BLOCK_USER,
+            case REMOVE_BOOK -> {
+                String bookId = ConsoleManager.getUserInput("Enter the bookId for removal: ", input -> {
+                    if (input.length() == 7) {
+                        return input;
+                    }
+                    throw CustomRuntimeException.invalidBookId();
+                });
+                adminService = AdminService.getInstance();
+                try {
+
+                    adminService.removeItem(bookId, serviceProperty);
+                    ConsoleManager.print(String.format("======== BOOK(id# %s) REMOVED SUCCESSFULLY ======", bookId));
+                } catch (Exception exception) {
+                    ConsoleManager.print(exception.getMessage());
+                }
+            }
+            case BLOCK_USER,
                 UNBLOCK_USER -> {
             }
         }
