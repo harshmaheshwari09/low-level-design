@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.util.Properties;
 
 public abstract class RentingServiceDB {
-    private static String dbLocation;
+    private String dbLocation;
 
-    public static String getDbLocation() {
+    public String getDbLocation() {
         return dbLocation;
     }
 

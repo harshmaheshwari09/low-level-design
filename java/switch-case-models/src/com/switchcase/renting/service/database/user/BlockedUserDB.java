@@ -2,8 +2,6 @@ package com.switchcase.renting.service.database.user;
 
 import com.switchcase.database.model.Database;
 import com.switchcase.renting.service.database.RentingServiceDB;
-import com.switchcase.renting.service.database.item.ItemDetailsDB;
-import com.switchcase.renting.service.user.User;
 import com.switchcase.renting.service.util.ServiceProperty;
 
 import java.io.IOException;
@@ -14,7 +12,7 @@ import java.util.*;
 public class BlockedUserDB extends RentingServiceDB {
 
     private static BlockedUserDB obj;
-    private Set<String> blockedUsers;
+    private Set<String> blockedUsersDB;
 
     private BlockedUserDB(Properties serviceProperties) throws IOException, ClassNotFoundException {
         super(serviceProperties);
@@ -29,13 +27,13 @@ public class BlockedUserDB extends RentingServiceDB {
 
     @Override
     public void loadDB(String filePath) throws IOException, ClassNotFoundException {
-        if (blockedUsers != null) {
+        if (blockedUsersDB != null) {
             return;
         }
         if (!Files.isRegularFile(Paths.get(filePath))) {
-            blockedUsers = new HashSet<>();
+            blockedUsersDB = new HashSet<>();
         } else {
-            blockedUsers = (Set) Database.loadData(filePath);
+            blockedUsersDB = (Set) Database.loadData(filePath);
         }
     }
 
@@ -47,5 +45,18 @@ public class BlockedUserDB extends RentingServiceDB {
     @Override
     public String getFileName() {
         return "blockedUser.ser";
+    }
+
+    public void blockUser(String userID, boolean shouldBlock) throws IOException {
+        if (shouldBlock) {
+            blockedUsersDB.add(userID);
+        } else {
+            blockedUsersDB.remove(userID);
+        }
+        Database.storeData(blockedUsersDB, getDbLocation());
+    }
+
+    public boolean isBlocked(String userID) {
+        return blockedUsersDB.contains(userID);
     }
 }

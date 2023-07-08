@@ -1,5 +1,6 @@
 package com.switchcase.renting.service.model;
 
+import com.switchcase.games.util.ConsoleManager;
 import com.switchcase.renting.service.user.User;
 import com.switchcase.renting.service.util.CustomRuntimeException;
 
@@ -16,7 +17,12 @@ public abstract class RentingService {
     }
 
     public void startSession(User user) throws IOException, ClassNotFoundException {
-        AuthenticationService.execute(user, serviceProperties);
+        try {
+            AuthenticationService.execute(user, serviceProperties);
+        } catch (Exception exception) {
+            ConsoleManager.print(exception.getMessage());
+            return;
+        }
         OperationService.execute(user, serviceProperties);
     }
 

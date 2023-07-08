@@ -47,6 +47,7 @@ public class UserDetailsDB extends RentingServiceDB {
             userDetails = new HashMap<>();
         } else {
             userDetails = (Map) Database.loadData(filePath);
+            ;
         }
     }
 

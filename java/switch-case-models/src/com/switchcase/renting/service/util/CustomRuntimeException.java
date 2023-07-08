@@ -1,5 +1,7 @@
 package com.switchcase.renting.service.util;
 
+import java.io.IOException;
+
 public class CustomRuntimeException extends RuntimeException {
     public CustomRuntimeException(String message) {
         super(message);
@@ -33,6 +35,10 @@ public class CustomRuntimeException extends RuntimeException {
         return new CustomRuntimeException(ExceptionMessage.INVALID_USER_ID.getMessage());
     }
 
+    public static CustomRuntimeException userBlocked() {
+        return new CustomRuntimeException(ExceptionMessage.USER_BLOCKED.getMessage());
+    }
+
     private enum ExceptionMessage {
         USER_NAME_NOT_FOUND("ERROR! Invalid username\n"),
         USER_NAME_NOT_AVAILABLE("ERROR! Username is not available\n"),
@@ -40,7 +46,8 @@ public class CustomRuntimeException extends RuntimeException {
         UNABLE_TO_LOAD_SERVICE_PROPERTIES("ERROR! Unable to load service properties\n"),
         MISSING_INPUT("ERROR! No input provided\n"),
         INVALID_BOOK_ID("ERROR! Input bookID is invalid\n"),
-        INVALID_USER_ID("ERROR! Input userID is invalid\n");
+        INVALID_USER_ID("ERROR! Input userID is invalid\n"),
+        USER_BLOCKED("AUTHENTICATION ERROR! User is blocked \n");
 
         String message;
 

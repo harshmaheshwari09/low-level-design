@@ -52,12 +52,8 @@ public class AdminService {
         titleDetailsDB.removeEntry(removedItem.getTitle(), itemID);
     }
 
-    public boolean blockUser(String userID, Properties serviceProperty) throws IOException, ClassNotFoundException {
+    public void blockUser(String userID, Properties serviceProperty, boolean shouldBlock) throws IOException, ClassNotFoundException {
         BlockedUserDB blockedUserDB = BlockedUserDB.getInstance(serviceProperty);
-        return false;
-    }
-
-    public boolean unBlockUser(int userID) {
-        return false;
+        blockedUserDB.blockUser(userID, shouldBlock);
     }
 }

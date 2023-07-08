@@ -2,9 +2,11 @@ package com.switchcase.renting.service.model;
 
 import com.switchcase.games.util.ConsoleManager;
 import com.switchcase.renting.service.database.user.AuthenticationDB;
+import com.switchcase.renting.service.database.user.BlockedUserDB;
 import com.switchcase.renting.service.database.user.UserDetailsDB;
 import com.switchcase.renting.service.user.User;
 import com.switchcase.renting.service.util.AccessType;
+import com.switchcase.renting.service.util.CustomRuntimeException;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -18,8 +20,15 @@ public class AuthenticationService {
         AccessType accessType = getAccessType();
         switch (accessType) {
             case LOG_IN -> {
+                // authenticate credentials
                 AuthenticationDB authenticationDB = AuthenticationDB.getInstance(serviceProperties, user);
                 String userName = authenticationDB.validateCredentials();
+
+                // check status (BLOCK / UNBLOCK)
+                BlockedUserDB blockedUserDB = BlockedUserDB.getInstance(serviceProperties);
+                if (blockedUserDB.isBlocked(userName)) {
+                    throw CustomRuntimeException.userBlocked();
+                }
 
                 UserDetailsDB userDB = UserDetailsDB.getInstance(serviceProperties, user);
                 user.copy(userDB.loadUser(userName));

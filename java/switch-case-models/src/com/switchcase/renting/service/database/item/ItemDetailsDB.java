@@ -59,7 +59,7 @@ public class ItemDetailsDB extends RentingServiceDB {
         return itemId;
     }
 
-    public static void addNewItem(Item item, String itemID) throws IOException {
+    public void addNewItem(Item item, String itemID) throws IOException {
         itemDetailsDB.put(itemID, item);
         Database.storeData(itemDetailsDB, getDbLocation());
     }
