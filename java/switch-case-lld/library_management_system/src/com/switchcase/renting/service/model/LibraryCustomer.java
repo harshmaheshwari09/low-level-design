@@ -3,7 +3,6 @@ package com.switchcase.renting.service.model;
 import com.switchcase.renting.service.user.User;
 import com.switchcase.renting.service.util.LibraryOperations;
 import com.switchcase.renting.service.util.Operation;
-import com.switchcase.renting.service.util.ServiceProperty;
 
 import java.util.Properties;
 
@@ -15,12 +14,17 @@ public class LibraryCustomer extends User {
     }
 
     @Override
-    public String getDatabaseLocation(Properties serviceProperty) {
-        return serviceProperty.getProperty(ServiceProperty.USER_DATABASE_LOCATION) + "/customer/";
+    public void performOperation(Operation userOperation, Properties serviceProperty) {
+        System.out.print(userOperation);
     }
 
     @Override
-    public void performOperation(Operation userOperation, Properties serviceProperty) {
-        System.out.print(userOperation);
+    public String getAuthDatabaseFileName() {
+        return "customerAuthDB.ser";
+    }
+
+    @Override
+    public String getUserDetailsDatabaseFileName() {
+        return "customerDetailsDB.ser";
     }
 }

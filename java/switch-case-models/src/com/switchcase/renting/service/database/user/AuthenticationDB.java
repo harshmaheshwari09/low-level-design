@@ -1,32 +1,40 @@
-package com.switchcase.renting.service.database;
+package com.switchcase.renting.service.database.user;
 
 import com.switchcase.database.model.Database;
 import com.switchcase.games.util.ConsoleManager;
+import com.switchcase.renting.service.database.RentingServiceDB;
+import com.switchcase.renting.service.user.User;
 import com.switchcase.renting.service.util.CustomRuntimeException;
+import com.switchcase.renting.service.util.ServiceProperty;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 // @Singleton
-public class AuthenticationDB {
+public class AuthenticationDB extends RentingServiceDB {
 
     private static AuthenticationDB obj;
     private Map<String, String> credentials;
+    private static User user;
 
-    private AuthenticationDB() {
+    private AuthenticationDB(Properties serviceProperty) throws IOException, ClassNotFoundException {
+        super(serviceProperty);
     }
 
-    public static AuthenticationDB getInstance() {
+    public static AuthenticationDB getInstance(Properties serviceProperty, User currentUser) throws IOException, ClassNotFoundException {
         if (obj == null) {
-            obj = new AuthenticationDB();
+            user = currentUser;
+            obj = new AuthenticationDB(serviceProperty);
         }
         return obj;
     }
 
-    private void loadDB(String filePath) throws IOException, ClassNotFoundException {
+    @Override
+    public void loadDB(String filePath) throws IOException, ClassNotFoundException {
         if (credentials != null) {
             return;
         }
@@ -38,8 +46,17 @@ public class AuthenticationDB {
         }
     }
 
-    public String validateCredentials(String filePath) throws IOException, ClassNotFoundException {
-        loadDB(filePath);
+    @Override
+    protected String getPath() {
+        return ServiceProperty.USER_DB_PATH;
+    }
+
+    @Override
+    protected String getFileName() {
+        return user.getAuthDatabaseFileName();
+    }
+
+    public String validateCredentials() {
         ConsoleManager.print("\nPlease enter your credentials: ");
         String userName = ConsoleManager.getUserInput("\nUsername: ", input -> {
             if (credentials.containsKey(input)) {
@@ -56,8 +73,7 @@ public class AuthenticationDB {
         });
     }
 
-    public String registerNewUser(String filePath) throws IOException, ClassNotFoundException {
-        loadDB(filePath);
+    public String registerNewUser() throws IOException {
         ConsoleManager.print("\nPlease submit the details:");
         String userName = ConsoleManager.getUserInput("\nUsername: ", input -> {
             if (!credentials.containsKey(input)) {
@@ -72,7 +88,7 @@ public class AuthenticationDB {
             throw CustomRuntimeException.invalidPasswordException();
         });
         credentials.put(userName, password);
-        Database.storeData(credentials, filePath);
+        Database.storeData(credentials, getDbLocation());
         return userName;
     }
 }

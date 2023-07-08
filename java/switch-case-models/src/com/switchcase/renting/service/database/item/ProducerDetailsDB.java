@@ -1,6 +1,7 @@
-package com.switchcase.renting.service.database;
+package com.switchcase.renting.service.database.item;
 
 import com.switchcase.database.model.Database;
+import com.switchcase.renting.service.database.RentingServiceDB;
 import com.switchcase.renting.service.util.ServiceProperty;
 
 import java.io.IOException;
@@ -9,16 +10,13 @@ import java.nio.file.Paths;
 import java.util.*;
 
 // @Singleton
-public class ProducerDetailsDB {
+public class ProducerDetailsDB extends RentingServiceDB {
 
     private static ProducerDetailsDB obj;
     private static Map<String, Set<String>> producerDetailsDB;
-    private static String dbLocation;
-    private final static String PRODUCER_DB_FILENAME = "autherDB.ser";
 
     private ProducerDetailsDB(Properties serviceProperty) throws IOException, ClassNotFoundException {
-        dbLocation = getDatabaseLocation(serviceProperty);
-        loadDB(dbLocation);
+        super(serviceProperty);
     }
 
     public static ProducerDetailsDB getInstance(Properties serviceProperty) throws IOException, ClassNotFoundException {
@@ -28,14 +26,18 @@ public class ProducerDetailsDB {
         return obj;
     }
 
-    private static String getDatabaseLocation(Properties serviceProperty) {
-        return ServiceProperty.SRC_DIRECTORY
-            + serviceProperty.getProperty(ServiceProperty.USER_DATABASE_LOCATION)
-            + "/item/"
-            + PRODUCER_DB_FILENAME;
+    @Override
+    public String getPath() {
+        return ServiceProperty.ITEM_DB_PATH;
     }
 
-    private static void loadDB(String filePath) throws IOException, ClassNotFoundException {
+    @Override
+    public String getFileName() {
+        return "autherDB.ser";
+    }
+
+    @Override
+    public void loadDB(String filePath) throws IOException, ClassNotFoundException {
         if (producerDetailsDB != null) {
             return;
         }
@@ -53,7 +55,7 @@ public class ProducerDetailsDB {
             }
             producerDetailsDB.get(producer).add(itemID);
         }
-        Database.storeData(producerDetailsDB, dbLocation);
+        Database.storeData(producerDetailsDB, getDbLocation());
     }
 
     public void removeEntry(Set<String> producers, String itemID) throws IOException {
@@ -63,6 +65,6 @@ public class ProducerDetailsDB {
                 producerDetailsDB.remove(producer);
             }
         }
-        Database.storeData(producerDetailsDB, dbLocation);
+        Database.storeData(producerDetailsDB, getDbLocation());
     }
 }

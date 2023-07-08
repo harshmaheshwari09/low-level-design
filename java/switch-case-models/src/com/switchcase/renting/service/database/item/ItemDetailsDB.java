@@ -1,6 +1,7 @@
-package com.switchcase.renting.service.database;
+package com.switchcase.renting.service.database.item;
 
 import com.switchcase.database.model.Database;
+import com.switchcase.renting.service.database.RentingServiceDB;
 import com.switchcase.renting.service.util.CustomRuntimeException;
 import com.switchcase.renting.service.util.Item;
 import com.switchcase.renting.service.util.ServiceProperty;
@@ -14,18 +15,15 @@ import java.util.Properties;
 import java.util.Random;
 
 // @Singleton
-public class ItemDetailsDB {
+public class ItemDetailsDB extends RentingServiceDB {
 
     private static final Random random = new Random();
     private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    private final static String ITEM_INFO_DB_FILENAME = "itemInfo.ser";
     private static ItemDetailsDB obj;
     private static Map<String, Item> itemDetailsDB;
-    private static String dbLocation;
 
     private ItemDetailsDB(Properties serviceProperty) throws IOException, ClassNotFoundException {
-        dbLocation = getDatabaseLocation(serviceProperty);
-        loadDB(dbLocation);
+        super(serviceProperty);
     }
 
     public static ItemDetailsDB getInstance(Properties serviceProperty) throws IOException, ClassNotFoundException {
@@ -35,14 +33,8 @@ public class ItemDetailsDB {
         return obj;
     }
 
-    private static String getDatabaseLocation(Properties serviceProperty) {
-        return ServiceProperty.SRC_DIRECTORY
-            + serviceProperty.getProperty(ServiceProperty.USER_DATABASE_LOCATION)
-            + "/item/"
-            + ITEM_INFO_DB_FILENAME;
-    }
-
-    private static void loadDB(String filePath) throws IOException, ClassNotFoundException {
+    @Override
+    public void loadDB(String filePath) throws IOException, ClassNotFoundException {
         if (itemDetailsDB != null) {
             return;
         }
@@ -54,7 +46,7 @@ public class ItemDetailsDB {
     }
 
     // generate a valid 7 digit unique ID
-    String generateNewID() {
+    public String generateNewID() {
         String itemId;
         do {
             StringBuilder builder = new StringBuilder(7);
@@ -69,15 +61,25 @@ public class ItemDetailsDB {
 
     public static void addNewItem(Item item, String itemID) throws IOException {
         itemDetailsDB.put(itemID, item);
-        Database.storeData(itemDetailsDB, dbLocation);
+        Database.storeData(itemDetailsDB, getDbLocation());
     }
 
     public Item removeItem(String itemID) throws IOException {
         if (!itemDetailsDB.containsKey(itemID)) {
-            throw CustomRuntimeException.invalidBookId();
+            throw CustomRuntimeException.invalidBookID();
         }
         Item removedItem = itemDetailsDB.remove(itemID);
-        Database.storeData(itemDetailsDB, dbLocation);
+        Database.storeData(itemDetailsDB, getDbLocation());
         return removedItem;
+    }
+
+    @Override
+    public String getPath() {
+        return ServiceProperty.ITEM_DB_PATH;
+    }
+
+    @Override
+    public String getFileName() {
+        return "itemInfo.ser";
     }
 }

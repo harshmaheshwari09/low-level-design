@@ -63,8 +63,9 @@ public abstract class User implements Serializable {
     }
 
     public abstract Operation[] getUserOperations();
-
-    public abstract String getDatabaseLocation(Properties serviceProperty);
-
     public abstract void performOperation(Operation userOperation, Properties serviceProperty) throws IOException, ClassNotFoundException;
+
+    abstract public String getAuthDatabaseFileName();
+
+    abstract public String getUserDetailsDatabaseFileName();
 }

@@ -5,7 +5,6 @@ import com.switchcase.renting.service.user.User;
 import com.switchcase.renting.service.util.CustomRuntimeException;
 import com.switchcase.renting.service.util.LibraryOperations;
 import com.switchcase.renting.service.util.Operation;
-import com.switchcase.renting.service.util.ServiceProperty;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -20,8 +19,13 @@ public class LibraryManager extends User {
     }
 
     @Override
-    public String getDatabaseLocation(Properties serviceProperty) {
-        return serviceProperty.getProperty(ServiceProperty.USER_DATABASE_LOCATION) + "/manager/";
+    public String getAuthDatabaseFileName() {
+        return "managerAuthDB.ser";
+    }
+
+    @Override
+    public String getUserDetailsDatabaseFileName() {
+        return "managerDetailsDB.ser";
     }
 
     @Override
@@ -51,7 +55,7 @@ public class LibraryManager extends User {
                     if (input.length() == 7) {
                         return input;
                     }
-                    throw CustomRuntimeException.invalidBookId();
+                    throw CustomRuntimeException.invalidBookID();
                 });
                 adminService = AdminService.getInstance();
                 try {
@@ -62,8 +66,14 @@ public class LibraryManager extends User {
                     ConsoleManager.print(exception.getMessage());
                 }
             }
-            case BLOCK_USER,
-                UNBLOCK_USER -> {
+            case BLOCK_USER -> {
+                String userId = ConsoleManager.getUserInput(String.format("Enter the userId to %s: ", operation), input -> {
+                    if (input.length() != 0) {
+                        return input;
+                    }
+                    throw CustomRuntimeException.invalidUserID();
+                });
+                adminService.blockUser(userId, serviceProperty);
             }
         }
     }

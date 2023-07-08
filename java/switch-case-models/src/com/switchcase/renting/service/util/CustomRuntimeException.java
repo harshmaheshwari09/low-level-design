@@ -25,8 +25,12 @@ public class CustomRuntimeException extends RuntimeException {
         return new CustomRuntimeException(ExceptionMessage.MISSING_INPUT.getMessage());
     }
 
-    public static CustomRuntimeException invalidBookId() {
+    public static CustomRuntimeException invalidBookID() {
         return new CustomRuntimeException(ExceptionMessage.INVALID_BOOK_ID.getMessage());
+    }
+
+    public static CustomRuntimeException invalidUserID() {
+        return new CustomRuntimeException(ExceptionMessage.INVALID_USER_ID.getMessage());
     }
 
     private enum ExceptionMessage {
@@ -35,7 +39,8 @@ public class CustomRuntimeException extends RuntimeException {
         INVALID_PASSWORD("ERROR! Invalid password\n"),
         UNABLE_TO_LOAD_SERVICE_PROPERTIES("ERROR! Unable to load service properties\n"),
         MISSING_INPUT("ERROR! No input provided\n"),
-        INVALID_BOOK_ID("ERROR! Input bookId is invalid\n");
+        INVALID_BOOK_ID("ERROR! Input bookID is invalid\n"),
+        INVALID_USER_ID("ERROR! Input userID is invalid\n");
 
         String message;
 

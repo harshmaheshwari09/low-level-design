@@ -1,19 +1,15 @@
 package com.switchcase.renting.service.model;
 
 import com.switchcase.games.util.ConsoleManager;
-import com.switchcase.renting.service.database.AuthenticationDB;
-import com.switchcase.renting.service.database.UserDB;
+import com.switchcase.renting.service.database.user.AuthenticationDB;
+import com.switchcase.renting.service.database.user.UserDetailsDB;
 import com.switchcase.renting.service.user.User;
 import com.switchcase.renting.service.util.AccessType;
-import com.switchcase.renting.service.util.ServiceProperty;
 
 import java.io.IOException;
 import java.util.Properties;
 
 public class AuthenticationService {
-
-    private final static String USER_INFO_DB_FILENAME = "userInfo.ser";
-    private final static String AUTHENTICATION_DB_FILENAME = "authentication.ser";
 
     private AuthenticationService() {
     }
@@ -22,32 +18,20 @@ public class AuthenticationService {
         AccessType accessType = getAccessType();
         switch (accessType) {
             case LOG_IN -> {
-                AuthenticationDB authenticationDB = AuthenticationDB.getInstance();
-                String userName =
-                    authenticationDB.validateCredentials(
-                        getDataBaseFilePath(user.getDatabaseLocation(serviceProperties), AUTHENTICATION_DB_FILENAME));
+                AuthenticationDB authenticationDB = AuthenticationDB.getInstance(serviceProperties, user);
+                String userName = authenticationDB.validateCredentials();
 
-                UserDB userDB = UserDB.getInstance();
-                user.copy(
-                    userDB.loadUser(
-                        getDataBaseFilePath(user.getDatabaseLocation(serviceProperties), USER_INFO_DB_FILENAME),
-                        userName));
+                UserDetailsDB userDB = UserDetailsDB.getInstance(serviceProperties, user);
+                user.copy(userDB.loadUser(userName));
             }
             case REGISTER -> {
-                AuthenticationDB authenticationDB = AuthenticationDB.getInstance();
-                String userName = authenticationDB.registerNewUser(
-                    getDataBaseFilePath(user.getDatabaseLocation(serviceProperties), AUTHENTICATION_DB_FILENAME));
+                AuthenticationDB authenticationDB = AuthenticationDB.getInstance(serviceProperties, user);
+                String userName = authenticationDB.registerNewUser();
 
-                UserDB userDB = UserDB.getInstance();
-                userDB.registerNewUser(
-                    getDataBaseFilePath(user.getDatabaseLocation(serviceProperties), USER_INFO_DB_FILENAME),
-                    userName, user);
+                UserDetailsDB userDB = UserDetailsDB.getInstance(serviceProperties, user);
+                userDB.registerNewUser(userName, user);
             }
         }
-    }
-
-    static String getDataBaseFilePath(String databaseLocation, String fileName) {
-        return ServiceProperty.SRC_DIRECTORY + databaseLocation + fileName;
     }
 
     static AccessType getAccessType() {

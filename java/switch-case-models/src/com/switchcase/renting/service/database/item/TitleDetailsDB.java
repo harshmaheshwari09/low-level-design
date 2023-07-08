@@ -1,6 +1,7 @@
-package com.switchcase.renting.service.database;
+package com.switchcase.renting.service.database.item;
 
 import com.switchcase.database.model.Database;
+import com.switchcase.renting.service.database.RentingServiceDB;
 import com.switchcase.renting.service.util.ServiceProperty;
 
 import java.io.IOException;
@@ -9,16 +10,13 @@ import java.nio.file.Paths;
 import java.util.*;
 
 // @Singleton
-public class TitleDetailsDB {
+public class TitleDetailsDB extends RentingServiceDB {
 
     private static TitleDetailsDB obj;
     private static Map<String, Set<String>> titleDetailsDB;
-    private static String dbLocation;
-    private final static String TITLE_DB_FILENAME = "titleDB.ser";
 
     private TitleDetailsDB(Properties serviceProperty) throws IOException, ClassNotFoundException {
-        dbLocation = getDatabaseLocation(serviceProperty);
-        loadDB(dbLocation);
+        super(serviceProperty);
     }
 
     public static TitleDetailsDB getInstance(Properties serviceProperty) throws IOException, ClassNotFoundException {
@@ -28,14 +26,18 @@ public class TitleDetailsDB {
         return obj;
     }
 
-    private static String getDatabaseLocation(Properties serviceProperty) {
-        return ServiceProperty.SRC_DIRECTORY
-            + serviceProperty.getProperty(ServiceProperty.USER_DATABASE_LOCATION)
-            + "/item/"
-            + TITLE_DB_FILENAME;
+    @Override
+    public String getPath() {
+        return ServiceProperty.ITEM_DB_PATH;
     }
 
-    private static void loadDB(String filePath) throws IOException, ClassNotFoundException {
+    @Override
+    public String getFileName() {
+        return "titleDB.ser";
+    }
+
+    @Override
+    public void loadDB(String filePath) throws IOException, ClassNotFoundException {
         if (titleDetailsDB != null) {
             return;
         }
@@ -51,7 +53,7 @@ public class TitleDetailsDB {
             titleDetailsDB.put(title, new HashSet<>());
         }
         titleDetailsDB.get(title).add(itemID);
-        Database.storeData(titleDetailsDB, dbLocation);
+        Database.storeData(titleDetailsDB, getDbLocation());
     }
 
     public void removeEntry(String title, String itemID) throws IOException {
@@ -59,6 +61,6 @@ public class TitleDetailsDB {
         if (titleDetailsDB.get(title).size() == 0) {
             titleDetailsDB.remove(title);
         }
-        Database.storeData(titleDetailsDB, dbLocation);
+        Database.storeData(titleDetailsDB, getDbLocation());
     }
 }
