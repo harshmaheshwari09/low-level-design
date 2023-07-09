@@ -1,5 +1,7 @@
 package com.switchcase.renting.service.util;
 
+import com.switchcase.renting.service.model.Operation;
+
 public enum LibraryOperations implements Operation {
     SHOW_PROFILE,
     SEARCH_BOOK,

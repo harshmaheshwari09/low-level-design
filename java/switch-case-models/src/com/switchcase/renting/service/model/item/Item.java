@@ -1,4 +1,4 @@
-package com.switchcase.renting.service.util;
+package com.switchcase.renting.service.model.item;
 
 import com.switchcase.games.util.ConsoleManager;
 
@@ -15,6 +15,7 @@ public abstract class Item implements Serializable {
     protected Set<String> producers;
     protected Date dateOfProduction;
     protected Location location;
+    protected Type type;
 
     public String getTitle() {
         return title;

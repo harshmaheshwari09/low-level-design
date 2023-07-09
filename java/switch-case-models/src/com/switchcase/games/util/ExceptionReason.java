@@ -1,7 +1,5 @@
 package com.switchcase.games.util;
 
-import com.switchcase.renting.service.user.User;
-
 public enum ExceptionReason {
     INCORRECT_GAME_RESULT("Game result can't be ONGOING.\n"),
     ILLEGAL_BOARD_SIZE("Board size is not an Integer. TRY AGAIN!\n"),

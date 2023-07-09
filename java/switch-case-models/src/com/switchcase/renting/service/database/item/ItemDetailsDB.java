@@ -3,7 +3,7 @@ package com.switchcase.renting.service.database.item;
 import com.switchcase.database.model.Database;
 import com.switchcase.renting.service.database.RentingServiceDB;
 import com.switchcase.renting.service.util.CustomRuntimeException;
-import com.switchcase.renting.service.util.Item;
+import com.switchcase.renting.service.model.item.Item;
 import com.switchcase.renting.service.util.ServiceProperty;
 
 import java.io.IOException;

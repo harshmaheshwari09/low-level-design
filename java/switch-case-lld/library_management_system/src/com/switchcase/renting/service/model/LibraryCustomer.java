@@ -2,7 +2,6 @@ package com.switchcase.renting.service.model;
 
 import com.switchcase.renting.service.util.CustomRuntimeException;
 import com.switchcase.renting.service.util.LibraryOperations;
-import com.switchcase.renting.service.util.Operation;
 
 import java.io.IOException;
 import java.util.Properties;

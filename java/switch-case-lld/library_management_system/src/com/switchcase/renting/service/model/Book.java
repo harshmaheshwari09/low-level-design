@@ -2,12 +2,10 @@ package com.switchcase.renting.service.model;
 
 import com.switchcase.games.util.ConsoleManager;
 import com.switchcase.renting.service.util.Genre;
-import com.switchcase.renting.service.util.Item;
-import com.switchcase.renting.service.util.Location;
+import com.switchcase.renting.service.model.item.Item;
+import com.switchcase.renting.service.model.item.Location;
 
 public class Book extends Item {
-
-    Genre genre;
 
     public static Book createNewBook() {
         return
@@ -21,7 +19,7 @@ public class Book extends Item {
     private Book buildGenreAndLocation() {
         Genre[] genres = Genre.values();
         int id = Genre.selectGenre(genres);
-        this.genre = genres[id];
+        this.type = genres[id];
         this.location = new Location(id);
         return this;
     }
@@ -47,7 +45,7 @@ public class Book extends Item {
         ConsoleManager.print(
             String.format(
                 "\n| %-7s | %-20s | %-20s | %-18tF | %-8s | %-8d |",
-                bookId, this.title, this.producers, this.dateOfProduction, this.genre, this.location.getX()
+                bookId, this.title, this.producers, this.dateOfProduction, this.type, this.location.getX()
             )
         );
     }

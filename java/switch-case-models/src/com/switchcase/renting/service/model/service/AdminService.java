@@ -1,10 +1,10 @@
-package com.switchcase.renting.service.model;
+package com.switchcase.renting.service.model.service;
 
 import com.switchcase.renting.service.database.item.ItemDetailsDB;
 import com.switchcase.renting.service.database.item.ProducerDetailsDB;
 import com.switchcase.renting.service.database.item.TitleDetailsDB;
 import com.switchcase.renting.service.database.user.BlockedUserDB;
-import com.switchcase.renting.service.util.Item;
+import com.switchcase.renting.service.model.item.Item;
 
 import java.io.IOException;
 import java.util.Properties;

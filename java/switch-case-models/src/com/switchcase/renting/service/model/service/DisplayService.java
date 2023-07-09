@@ -1,8 +1,8 @@
-package com.switchcase.renting.service.model;
+package com.switchcase.renting.service.model.service;
 
 import com.switchcase.renting.service.database.item.ItemDetailsDB;
-import com.switchcase.renting.service.user.User;
-import com.switchcase.renting.service.util.Item;
+import com.switchcase.renting.service.model.user.User;
+import com.switchcase.renting.service.model.item.Item;
 
 import java.io.IOException;
 import java.util.Map;

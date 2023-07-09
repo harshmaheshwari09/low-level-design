@@ -1,4 +1,4 @@
-package com.switchcase.renting.service.util;
+package com.switchcase.renting.service.model.item;
 
 import java.io.Serializable;
 

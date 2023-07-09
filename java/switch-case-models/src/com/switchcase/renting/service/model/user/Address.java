@@ -1,4 +1,4 @@
-package com.switchcase.renting.service.user;
+package com.switchcase.renting.service.model.user;
 
 public class Address {
     int postCode;

@@ -1,8 +1,9 @@
 package com.switchcase.renting.service.util;
 
 import com.switchcase.games.util.ConsoleManager;
+import com.switchcase.renting.service.model.item.Type;
 
-public enum Genre {
+public enum Genre implements Type {
     FICTION,
     NON_FICTION,
     MYSTERY,

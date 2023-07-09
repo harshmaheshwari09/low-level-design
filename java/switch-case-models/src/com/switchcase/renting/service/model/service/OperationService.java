@@ -1,8 +1,8 @@
-package com.switchcase.renting.service.model;
+package com.switchcase.renting.service.model.service;
 
 import com.switchcase.games.util.ConsoleManager;
-import com.switchcase.renting.service.user.User;
-import com.switchcase.renting.service.util.Operation;
+import com.switchcase.renting.service.model.user.User;
+import com.switchcase.renting.service.model.Operation;
 
 import java.io.IOException;
 import java.util.Properties;

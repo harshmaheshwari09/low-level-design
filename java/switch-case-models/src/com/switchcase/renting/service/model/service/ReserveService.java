@@ -1,4 +1,4 @@
-package com.switchcase.renting.service.model;
+package com.switchcase.renting.service.model.service;
 
 import java.util.Date;
 
