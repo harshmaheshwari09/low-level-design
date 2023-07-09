@@ -1,17 +1,21 @@
 package com.switchcase.renting.service.model.user;
 
 import com.switchcase.games.util.ConsoleManager;
-import com.switchcase.renting.service.util.CustomRuntimeException;
+import com.switchcase.renting.service.database.user.UserDetailsDB;
 import com.switchcase.renting.service.model.Operation;
+import com.switchcase.renting.service.util.CustomRuntimeException;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Properties;
 
 public abstract class User implements Serializable {
+    protected String userID;
     protected String name;
-
     protected String lastName;
+    private static final long serialVersionUID = 123456789L;
+
+    public abstract UserDetailsDB getUserDB(Properties serviceProperties) throws IOException, ClassNotFoundException;
 
     public void buildName() {
         this.name = ConsoleManager.getUserInput("Name: ", input -> {
@@ -41,6 +45,7 @@ public abstract class User implements Serializable {
     public void copy(User user) {
         this.name = user.name;
         this.lastName = user.lastName;
+        this.userID = user.userID;
     }
 
     public Operation getOperation() {
@@ -59,9 +64,12 @@ public abstract class User implements Serializable {
     }
 
     public abstract Operation[] getUserOperations();
+
     public abstract void performOperation(Operation userOperation, Properties serviceProperty) throws IOException, ClassNotFoundException;
 
     abstract public String getAuthDatabaseFileName();
 
-    abstract public String getUserDetailsDatabaseFileName();
+    public void buildUserID(String userName) {
+        this.userID = userName;
+    }
 }

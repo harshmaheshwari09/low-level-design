@@ -16,11 +16,23 @@ Ichido Oda
 09/04/1995
 10
 
+/*------ Book 4 -----*/
+One Piece - 2
+Ichido Oda
+09/04/2000
+10
+
 /*------ User 1 -----*/
 hm
 hm
 h
 m
+
+/*------ User 2 -----*/
+hm2
+hm2
+h2
+m2
 
 /*------ Manager 1 -----*/
 hm_m

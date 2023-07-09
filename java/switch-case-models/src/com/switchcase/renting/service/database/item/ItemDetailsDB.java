@@ -2,20 +2,20 @@ package com.switchcase.renting.service.database.item;
 
 import com.switchcase.database.model.Database;
 import com.switchcase.renting.service.database.RentingServiceDB;
-import com.switchcase.renting.service.util.CustomRuntimeException;
 import com.switchcase.renting.service.model.item.Item;
+import com.switchcase.renting.service.util.CustomRuntimeException;
 import com.switchcase.renting.service.util.ServiceProperty;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
 // @Singleton
 public class ItemDetailsDB extends RentingServiceDB {
 
-    private static final Random random = new Random();
-    private static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static ItemDetailsDB obj;
     private static Map<String, Item> itemDetailsDB;
 
@@ -42,28 +42,16 @@ public class ItemDetailsDB extends RentingServiceDB {
         }
     }
 
-    // generate a valid 7 digit unique ID
-    public String generateNewID() {
-        String itemId;
-        do {
-            StringBuilder builder = new StringBuilder(7);
-            for (int i = 0; i < 7; i++) {
-                int randomIdx = random.nextInt(CHARACTERS.length());
-                builder.append(CHARACTERS.charAt(randomIdx));
-            }
-            itemId = builder.toString();
-        } while (itemDetailsDB.containsKey(itemId));
-        return itemId;
-    }
-
-    public void addNewItem(Item item, String itemID) throws IOException {
+    public String addNewItem(Item item) throws IOException {
+        String itemID = generateNewID(itemDetailsDB.keySet());
         itemDetailsDB.put(itemID, item);
         Database.storeData(itemDetailsDB, getDbLocation());
+        return itemID;
     }
 
     public Item removeItem(String itemID) throws IOException {
         if (!itemDetailsDB.containsKey(itemID)) {
-            throw CustomRuntimeException.invalidBookID();
+            throw CustomRuntimeException.invalidID();
         }
         Item removedItem = itemDetailsDB.remove(itemID);
         Database.storeData(itemDetailsDB, getDbLocation());
@@ -82,5 +70,9 @@ public class ItemDetailsDB extends RentingServiceDB {
 
     public Map<String, Item> getItems() {
         return itemDetailsDB;
+    }
+
+    public boolean isValidItemID(String itemID) {
+        return itemDetailsDB.keySet().contains(itemID);
     }
 }

@@ -7,7 +7,7 @@ public class LibraryManagement extends RentingService {
         "/java/switch-case-lld/library_management_system/src/com/switchcase/renting/service/generic/library_management_system.properties";
 
     @Override
-    String getAbsolutePropertyFilePath() {
+    public String getAbsolutePropertyFilePath() {
         return System.getProperty("user.dir") + RELATIVE_PROPERTY_FILE_PATH;
     }
 }

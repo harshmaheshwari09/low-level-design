@@ -5,4 +5,5 @@ public class ServiceProperty {
     public final static String USER_DATABASE_LOCATION = "com.switch.case.renting.service.database.location";
     public final static String ITEM_DB_PATH = "/item/";
     public final static String USER_DB_PATH = "/user/";
+    public final static String TICKET_DB_PATH = "/item/";
 }

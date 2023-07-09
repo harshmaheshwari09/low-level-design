@@ -7,12 +7,14 @@ import com.switchcase.renting.service.util.ServiceProperty;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Properties;
+import java.util.Set;
 
 public class BlockedUserDB extends RentingServiceDB {
 
     private static BlockedUserDB obj;
-    private Set<String> blockedUsersDB;
+    private static Set<String> blockedUsersDB;
 
     private BlockedUserDB(Properties serviceProperties) throws IOException, ClassNotFoundException {
         super(serviceProperties);

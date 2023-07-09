@@ -1,19 +1,15 @@
 package com.switchcase.renting.service.model;
 
 import com.switchcase.games.util.ConsoleManager;
-import com.switchcase.renting.service.util.Genre;
 import com.switchcase.renting.service.model.item.Item;
 import com.switchcase.renting.service.model.item.Location;
+import com.switchcase.renting.service.model.user.Status;
+import com.switchcase.renting.service.util.Genre;
 
 public class Book extends Item {
 
     public static Book createNewBook() {
-        return
-            new Book()
-                .buildTitle()
-                .buildAuthers()
-                .buildDateOfPublication()
-                .buildGenreAndLocation();
+        return new Book().buildTitle().buildAuthers().buildDateOfPublication().buildGenreAndLocation();
     }
 
     private Book buildGenreAndLocation() {
@@ -41,12 +37,9 @@ public class Book extends Item {
 
 
     @Override
-    public void print(String bookId) {
-        ConsoleManager.print(
-            String.format(
-                "\n| %-7s | %-20s | %-20s | %-18tF | %-8s | %-8d |",
-                bookId, this.title, this.producers, this.dateOfProduction, this.type, this.location.getX()
-            )
-        );
+    public void print(String bookId, Status bookStatus) {
+        ConsoleManager.print(String.format(
+            "\n| %-7s | %-20s | %-20s | %-18tF | %-8s | %-8d | %-12s | ",
+            bookId, this.title, this.producers, this.dateOfProduction, this.type, this.location.getX(), bookStatus));
     }
 }

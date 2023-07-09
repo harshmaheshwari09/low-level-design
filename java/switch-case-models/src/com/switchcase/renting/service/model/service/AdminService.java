@@ -24,8 +24,7 @@ public class AdminService {
     public String addItem(Item item, Properties serviceProperty) throws IOException, ClassNotFoundException {
         // updating DB for id -> item
         ItemDetailsDB itemDetailsDB = ItemDetailsDB.getInstance(serviceProperty);
-        String itemID = itemDetailsDB.generateNewID();
-        itemDetailsDB.addNewItem(item, itemID);
+        String itemID = itemDetailsDB.addNewItem(item);
 
         // updating DB for auther -> {itemIDs}
         ProducerDetailsDB producerDetailsDB = ProducerDetailsDB.getInstance(serviceProperty);

@@ -1,12 +1,18 @@
 package com.switchcase.games.model;
 
 import com.switchcase.database.model.Database;
-import com.switchcase.games.util.*;
+import com.switchcase.games.util.ConsoleManager;
+import com.switchcase.games.util.ExceptionReason;
+import com.switchcase.games.util.GameProperties;
+import com.switchcase.games.util.Result;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 

@@ -1,5 +1,7 @@
 package com.switchcase.renting.service.model;
 
+import com.switchcase.renting.service.database.user.CustomerDetailsDB;
+import com.switchcase.renting.service.database.user.UserDetailsDB;
 import com.switchcase.renting.service.util.CustomRuntimeException;
 import com.switchcase.renting.service.util.LibraryOperations;
 
@@ -9,8 +11,18 @@ import java.util.Properties;
 public class LibraryCustomer extends LibraryUser {
 
     @Override
+    public UserDetailsDB getUserDB(Properties serviceProperties) throws IOException, ClassNotFoundException {
+        return CustomerDetailsDB.getInstance(serviceProperties);
+    }
+
+    @Override
     public Operation[] getUserOperations() {
         return LibraryOperations.getUserOperations();
+    }
+
+    @Override
+    void issueBook(Properties serviceProperty) throws IOException, ClassNotFoundException {
+        issueBook(serviceProperty, this.userID);
     }
 
     @Override
@@ -31,10 +43,5 @@ public class LibraryCustomer extends LibraryUser {
     @Override
     public String getAuthDatabaseFileName() {
         return "customerAuthDB.ser";
-    }
-
-    @Override
-    public String getUserDetailsDatabaseFileName() {
-        return "customerDetailsDB.ser";
     }
 }

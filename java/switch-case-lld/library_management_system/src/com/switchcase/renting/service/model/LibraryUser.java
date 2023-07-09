@@ -1,12 +1,16 @@
 package com.switchcase.renting.service.model;
 
 import com.switchcase.games.util.ConsoleManager;
+import com.switchcase.renting.service.database.item.ItemDetailsDB;
 import com.switchcase.renting.service.model.service.DisplayService;
+import com.switchcase.renting.service.model.service.ReserveService;
 import com.switchcase.renting.service.model.user.User;
+import com.switchcase.renting.service.util.CustomRuntimeException;
 import com.switchcase.renting.service.util.LibraryOperations;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,9 +26,9 @@ public abstract class LibraryUser extends User {
             case SHOW_PROFILE -> System.out.println("display service: " + operation);
 
             // reserve service
-            case ISSUE_BOOK,
-                RETURN_BOOK,
-                RE_ISSUE_BOOK-> System.out.println("reserve service: " + operation);
+            case ISSUE_BOOK -> issueBook(serviceProperty);
+            case RETURN_BOOK,
+                RE_ISSUE_BOOK -> System.out.println("reserve service: " + operation);
 
             // admin service
             case ADD_BOOK -> addBook(serviceProperty);
@@ -33,6 +37,27 @@ public abstract class LibraryUser extends User {
             case UNBLOCK_USER -> blockUser(serviceProperty, operation, false);
         }
     }
+
+    protected void issueBook(Properties serviceProperties, String userID) throws IOException, ClassNotFoundException {
+        ItemDetailsDB itemDetailsDB = ItemDetailsDB.getInstance(serviceProperties);
+        String bookID = ConsoleManager.getUserInput("Enter the bookID: ", input -> {
+            if (itemDetailsDB.isValidItemID(input.trim())) {
+                return input.trim();
+            }
+            throw CustomRuntimeException.invalidID();
+        });
+
+        ReserveService reserveService = ReserveService.getInstance();
+        try {
+            reserveService.bookItem(userID, bookID, new Date(), 10, serviceProperties);
+        } catch (CustomRuntimeException exception) {
+            ConsoleManager.print(exception.getMessage());
+            return;
+        }
+        ConsoleManager.print(String.format("======== BOOK(id# %s) ISSUED SUCCESSFULLY to %s ======", bookID, userID));
+    }
+
+    abstract void issueBook(Properties serviceProperty) throws IOException, ClassNotFoundException;
 
     abstract void addBook(Properties serviceProperty) throws IOException, ClassNotFoundException;
 
@@ -61,10 +86,10 @@ public abstract class LibraryUser extends User {
         DisplayService displayService = DisplayService.getInstance();
         ConsoleManager.print(
             String.format(
-                "\n| %-7s | %-20s | %-20s | %-18s | %-8s | %-8s |\n",
-                "BookID", "Title", "Authers", "Publication Date", "Genre", "Shelf #")
+                "\n| %-7s | %-20s | %-20s | %-18s | %-8s | %-8s | %-12s |\n",
+                "BookID", "Title", "Authers", "Publication Date", "Genre", "Shelf #", "Status")
         );
-        ConsoleManager.print("-".repeat(100));
+        ConsoleManager.print("-".repeat(112));
         displayService.searchItem(book, serviceProperty);
     }
 }

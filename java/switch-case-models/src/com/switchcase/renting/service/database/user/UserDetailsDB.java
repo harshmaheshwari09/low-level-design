@@ -12,22 +12,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class UserDetailsDB extends RentingServiceDB {
+public abstract class UserDetailsDB extends RentingServiceDB {
 
-    private static UserDetailsDB obj;
+
     private Map<String, User> userDetails;
-    private static User user;
 
-    private UserDetailsDB(Properties serviceProperty) throws IOException, ClassNotFoundException {
+    protected UserDetailsDB(Properties serviceProperty) throws IOException, ClassNotFoundException {
         super(serviceProperty);
-    }
-
-    public static UserDetailsDB getInstance(Properties serviceProperty, User currentUser) throws IOException, ClassNotFoundException {
-        if (obj == null) {
-            user = currentUser;
-            obj = new UserDetailsDB(serviceProperty);
-        }
-        return obj;
     }
 
     public User loadUser(String userName) {
@@ -37,6 +28,7 @@ public class UserDetailsDB extends RentingServiceDB {
     public void registerNewUser(String userName, User user) throws IOException {
         user.buildName();
         user.buildLastName();
+        user.buildUserID(userName);
         userDetails.put(userName, user);
         Database.storeData(userDetails, getDbLocation());
     }
@@ -47,7 +39,6 @@ public class UserDetailsDB extends RentingServiceDB {
             userDetails = new HashMap<>();
         } else {
             userDetails = (Map) Database.loadData(filePath);
-            ;
         }
     }
 
@@ -56,8 +47,7 @@ public class UserDetailsDB extends RentingServiceDB {
         return ServiceProperty.USER_DB_PATH;
     }
 
-    @Override
-    protected String getFileName() {
-        return user.getUserDetailsDatabaseFileName();
+    public boolean isValidID(String userID) {
+        return userDetails.keySet().contains(userID);
     }
 }

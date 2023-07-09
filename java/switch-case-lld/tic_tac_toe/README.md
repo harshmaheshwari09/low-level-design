@@ -84,7 +84,7 @@ display the current state of the board.
 The **Player** class represents a player and keeps track of their marker (X or O). It allows players to make moves by
 selecting a position on the board.
 
-The **Piece** class represents the markers (X or O), used by the players. 
+The **Piece** class represents the markers (X or O), used by the players.
 
 ![Inheritance Flow](resources/inheritance_flow.svg)
 

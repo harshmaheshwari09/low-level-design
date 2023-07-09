@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 public class Location implements Serializable {
     Integer x;
+    Integer y;
+    Integer z;
+    private static final long serialVersionUID = 123456789L;
 
     public Integer getX() {
         return x;
     }
-
-    Integer y;
-    Integer z;
 
     public Location(int x) {
         this.x = x;

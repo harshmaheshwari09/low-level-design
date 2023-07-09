@@ -8,8 +8,6 @@ public enum LibraryOperations implements Operation {
     ISSUE_BOOK,
     RETURN_BOOK,
     RE_ISSUE_BOOK,
-    RESERVE_BOOK,
-    UN_RESERVE_BOOK,
     ADD_BOOK,
     REMOVE_BOOK,
     BLOCK_USER,
@@ -26,8 +24,6 @@ public enum LibraryOperations implements Operation {
             ISSUE_BOOK,
             RETURN_BOOK,
             RE_ISSUE_BOOK,
-            RESERVE_BOOK,
-            UN_RESERVE_BOOK,
         };
     }
 }

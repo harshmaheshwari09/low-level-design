@@ -30,14 +30,14 @@ public class AuthenticationService {
                     throw CustomRuntimeException.userBlocked();
                 }
 
-                UserDetailsDB userDB = UserDetailsDB.getInstance(serviceProperties, user);
+                UserDetailsDB userDB = user.getUserDB(serviceProperties);
                 user.copy(userDB.loadUser(userName));
             }
             case REGISTER -> {
                 AuthenticationDB authenticationDB = AuthenticationDB.getInstance(serviceProperties, user);
                 String userName = authenticationDB.registerNewUser();
 
-                UserDetailsDB userDB = UserDetailsDB.getInstance(serviceProperties, user);
+                UserDetailsDB userDB = user.getUserDB(serviceProperties);
                 userDB.registerNewUser(userName, user);
             }
         }

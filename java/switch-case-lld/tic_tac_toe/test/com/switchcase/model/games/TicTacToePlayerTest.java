@@ -33,7 +33,8 @@ public class TicTacToePlayerTest {
     public void testPerformOperation() {
         InputStream systemIn = System.in;
         String input = "0 0";
-        ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());;
+        ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());
+        ;
         System.setIn(testIn);
         Assertions.assertEquals(input, player.performOperation(new TicTacToeBoard(3)));
         System.setIn(systemIn);

@@ -1,6 +1,7 @@
 package com.switchcase.renting.service.model.item;
 
 import com.switchcase.games.util.ConsoleManager;
+import com.switchcase.renting.service.model.user.Status;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -16,6 +17,7 @@ public abstract class Item implements Serializable {
     protected Date dateOfProduction;
     protected Location location;
     protected Type type;
+    private static final long serialVersionUID = 123456789L;
 
     public String getTitle() {
         return title;
@@ -54,7 +56,7 @@ public abstract class Item implements Serializable {
         });
     }
 
-    abstract public void print(String key);
+    abstract public void print(String itemID, Status itemStatus);
 
     public void setTitle(String title) {
         this.title = title;

@@ -17,7 +17,7 @@ public class MockTicTacToeGame extends TicTacToeGame {
 
     @Override
     public Player createPlayer(int idx) {
-        switch(idx) {
+        switch (idx) {
             case 0 -> {
                 return new TicTacToePlayer(PLAYER_NAME_1, 5, TicTacToePiece.X);
             }

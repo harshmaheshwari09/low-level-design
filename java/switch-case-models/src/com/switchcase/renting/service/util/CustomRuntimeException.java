@@ -1,7 +1,5 @@
 package com.switchcase.renting.service.util;
 
-import java.io.IOException;
-
 public class CustomRuntimeException extends RuntimeException {
     public CustomRuntimeException(String message) {
         super(message);
@@ -27,12 +25,8 @@ public class CustomRuntimeException extends RuntimeException {
         return new CustomRuntimeException(ExceptionMessage.MISSING_INPUT.getMessage());
     }
 
-    public static CustomRuntimeException invalidBookID() {
-        return new CustomRuntimeException(ExceptionMessage.INVALID_BOOK_ID.getMessage());
-    }
-
-    public static CustomRuntimeException invalidUserID() {
-        return new CustomRuntimeException(ExceptionMessage.INVALID_USER_ID.getMessage());
+    public static CustomRuntimeException invalidID() {
+        return new CustomRuntimeException(ExceptionMessage.INVALID_ID.getMessage());
     }
 
     public static CustomRuntimeException userBlocked() {
@@ -43,16 +37,20 @@ public class CustomRuntimeException extends RuntimeException {
         return new CustomRuntimeException(ExceptionMessage.ILLEGAL_OPERATION.getMessage());
     }
 
+    public static CustomRuntimeException itemNotAvailable() {
+        return new CustomRuntimeException(ExceptionMessage.ITEM_NOT_AVAILABLE.getMessage());
+    }
+
     private enum ExceptionMessage {
         USER_NAME_NOT_FOUND("ERROR! Invalid username\n"),
         USER_NAME_NOT_AVAILABLE("ERROR! Username is not available\n"),
         INVALID_PASSWORD("ERROR! Invalid password\n"),
         UNABLE_TO_LOAD_SERVICE_PROPERTIES("ERROR! Unable to load service properties\n"),
         MISSING_INPUT("ERROR! No input provided\n"),
-        INVALID_BOOK_ID("ERROR! Input bookID is invalid\n"),
-        INVALID_USER_ID("ERROR! Input userID is invalid\n"),
+        INVALID_ID("ERROR! Input ID is invalid\n"),
         USER_BLOCKED("AUTHENTICATION ERROR! User is blocked \n"),
-        ILLEGAL_OPERATION("ERROR! User is not authorized to perform this operation.\n");
+        ILLEGAL_OPERATION("ERROR! User is not authorized to perform this operation.\n"),
+        ITEM_NOT_AVAILABLE("ERROR! Requested item is not available");
 
         String message;
 

@@ -1,6 +1,9 @@
 package com.switchcase.renting.service.model;
 
 import com.switchcase.games.util.ConsoleManager;
+import com.switchcase.renting.service.database.user.CustomerDetailsDB;
+import com.switchcase.renting.service.database.user.ManagerDetailsDB;
+import com.switchcase.renting.service.database.user.UserDetailsDB;
 import com.switchcase.renting.service.model.service.AdminService;
 import com.switchcase.renting.service.util.CustomRuntimeException;
 import com.switchcase.renting.service.util.LibraryOperations;
@@ -13,6 +16,11 @@ public class LibraryManager extends LibraryUser {
     AdminService adminService;
 
     @Override
+    public UserDetailsDB getUserDB(Properties serviceProperties) throws IOException, ClassNotFoundException {
+        return ManagerDetailsDB.getInstance(serviceProperties);
+    }
+
+    @Override
     public Operation[] getUserOperations() {
         return LibraryOperations.getManagerOperations();
     }
@@ -23,8 +31,15 @@ public class LibraryManager extends LibraryUser {
     }
 
     @Override
-    public String getUserDetailsDatabaseFileName() {
-        return "managerDetailsDB.ser";
+    void issueBook(Properties serviceProperty) throws IOException, ClassNotFoundException {
+        UserDetailsDB userDetailsDB = CustomerDetailsDB.getInstance(serviceProperty);
+        String userId = ConsoleManager.getUserInput("Enter the userID: ", input -> {
+            if (userDetailsDB.isValidID(input.trim())) {
+                return input.trim();
+            }
+            throw CustomRuntimeException.invalidID();
+        });
+        issueBook(serviceProperty, userId);
     }
 
     protected void addBook(Properties serviceProperty) throws IOException, ClassNotFoundException {
@@ -39,15 +54,16 @@ public class LibraryManager extends LibraryUser {
             if (input.length() == 7) {
                 return input;
             }
-            throw CustomRuntimeException.invalidBookID();
+            throw CustomRuntimeException.invalidID();
         });
         adminService = AdminService.getInstance();
         try {
             adminService.removeItem(bookId, serviceProperty);
-            ConsoleManager.print(String.format("======== BOOK(id# %s) REMOVED SUCCESSFULLY ======", bookId));
         } catch (Exception exception) {
             ConsoleManager.print(exception.getMessage());
+            return;
         }
+        ConsoleManager.print(String.format("======== BOOK(id# %s) REMOVED SUCCESSFULLY ======", bookId));
     }
 
     protected void blockUser(Properties serviceProperty, Operation operation, boolean shouldBlock) throws IOException, ClassNotFoundException {
@@ -55,7 +71,7 @@ public class LibraryManager extends LibraryUser {
             if (input.length() != 0) {
                 return input;
             }
-            throw CustomRuntimeException.invalidUserID();
+            throw CustomRuntimeException.invalidID();
         });
         adminService = AdminService.getInstance();
         adminService.blockUser(userId, serviceProperty, shouldBlock);

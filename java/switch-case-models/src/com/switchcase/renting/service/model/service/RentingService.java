@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.util.Properties;
 
 public abstract class RentingService {
-    
+
     Properties serviceProperties;
-    
+
     public RentingService() {
         loadProperties();
     }
@@ -35,5 +35,5 @@ public abstract class RentingService {
         }
     }
 
-    abstract String getAbsolutePropertyFilePath();
+    protected abstract String getAbsolutePropertyFilePath();
 }

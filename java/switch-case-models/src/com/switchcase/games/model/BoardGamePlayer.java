@@ -4,6 +4,7 @@ public abstract class BoardGamePlayer extends PlayerController {
     public BoardGamePlayer(String name, int playerInventory, GamePiece playerPiece) {
         super(name, playerInventory, playerPiece);
     }
+
     protected boolean isValidateCoordinates(int[] coordinates, GameBase board) {
         int boardSize = board.getGameScale();
         if (isNotInRange(coordinates, boardSize) || isNotSafeToPlace(coordinates, board)) {
