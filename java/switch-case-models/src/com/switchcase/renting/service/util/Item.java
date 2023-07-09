@@ -12,19 +12,17 @@ import java.util.stream.Collectors;
 
 public abstract class Item implements Serializable {
     protected String title;
+    protected Set<String> producers;
+    protected Date dateOfProduction;
+    protected Location location;
 
     public String getTitle() {
         return title;
     }
 
-    protected Set<String> producers;
-
     public Set<String> getProducers() {
         return producers;
     }
-
-    protected Date dateOfProduction;
-    protected Location location;
 
     protected String getTitleFromUser(String message) {
         return ConsoleManager.getUserInput(message, input -> {
@@ -53,5 +51,15 @@ public abstract class Item implements Serializable {
             }
             throw new RuntimeException();
         });
+    }
+
+    abstract public void print(String key);
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setProducers(Set<String> producers) {
+        this.producers = producers;
     }
 }

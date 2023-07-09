@@ -11,10 +11,6 @@ import java.util.Properties;
 public abstract class User implements Serializable {
     protected String name;
 
-    public String getName() {
-        return name;
-    }
-
     protected String lastName;
 
     public void buildName() {

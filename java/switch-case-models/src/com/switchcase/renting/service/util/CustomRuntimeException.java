@@ -39,6 +39,10 @@ public class CustomRuntimeException extends RuntimeException {
         return new CustomRuntimeException(ExceptionMessage.USER_BLOCKED.getMessage());
     }
 
+    public static CustomRuntimeException illegalOperation() {
+        return new CustomRuntimeException(ExceptionMessage.ILLEGAL_OPERATION.getMessage());
+    }
+
     private enum ExceptionMessage {
         USER_NAME_NOT_FOUND("ERROR! Invalid username\n"),
         USER_NAME_NOT_AVAILABLE("ERROR! Username is not available\n"),
@@ -47,7 +51,8 @@ public class CustomRuntimeException extends RuntimeException {
         MISSING_INPUT("ERROR! No input provided\n"),
         INVALID_BOOK_ID("ERROR! Input bookID is invalid\n"),
         INVALID_USER_ID("ERROR! Input userID is invalid\n"),
-        USER_BLOCKED("AUTHENTICATION ERROR! User is blocked \n");
+        USER_BLOCKED("AUTHENTICATION ERROR! User is blocked \n"),
+        ILLEGAL_OPERATION("ERROR! User is not authorized to perform this operation.\n");
 
         String message;
 

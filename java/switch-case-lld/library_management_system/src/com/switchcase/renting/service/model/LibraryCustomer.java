@@ -1,12 +1,13 @@
 package com.switchcase.renting.service.model;
 
-import com.switchcase.renting.service.user.User;
+import com.switchcase.renting.service.util.CustomRuntimeException;
 import com.switchcase.renting.service.util.LibraryOperations;
 import com.switchcase.renting.service.util.Operation;
 
+import java.io.IOException;
 import java.util.Properties;
 
-public class LibraryCustomer extends User {
+public class LibraryCustomer extends LibraryUser {
 
     @Override
     public Operation[] getUserOperations() {
@@ -14,8 +15,18 @@ public class LibraryCustomer extends User {
     }
 
     @Override
-    public void performOperation(Operation userOperation, Properties serviceProperty) {
-        System.out.print(userOperation);
+    void addBook(Properties serviceProperty) {
+        throw CustomRuntimeException.illegalOperation();
+    }
+
+    @Override
+    void removeBook(Properties serviceProperty) {
+        throw CustomRuntimeException.illegalOperation();
+    }
+
+    @Override
+    void blockUser(Properties serviceProperty, Operation operation, boolean shouldBlock) throws IOException, ClassNotFoundException {
+        throw CustomRuntimeException.illegalOperation();
     }
 
     @Override

@@ -1,0 +1,30 @@
+/*------ Book 1 -----*/
+Harry Potter - 1
+J. K. Rowling
+26/06/1987
+4
+
+/*------ Book 2 -----*/
+Harry Potter - 2
+J. K. Rowling
+27/06/1989
+4
+
+/*------ Book 3 -----*/
+One Piece
+Ichido Oda
+09/04/1995
+10
+
+/*------ User 1 -----*/
+hm
+hm
+h
+m
+
+/*------ Manager 1 -----*/
+hm_m
+hm_m
+h_m
+m_m
+

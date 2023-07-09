@@ -1,5 +1,6 @@
 package com.switchcase.renting.service.model;
 
+import com.switchcase.games.util.ConsoleManager;
 import com.switchcase.renting.service.util.Genre;
 import com.switchcase.renting.service.util.Item;
 import com.switchcase.renting.service.util.Location;
@@ -41,4 +42,13 @@ public class Book extends Item {
     }
 
 
+    @Override
+    public void print(String bookId) {
+        ConsoleManager.print(
+            String.format(
+                "\n| %-7s | %-20s | %-20s | %-18tF | %-8s | %-8d |",
+                bookId, this.title, this.producers, this.dateOfProduction, this.genre, this.location.getX()
+            )
+        );
+    }
 }

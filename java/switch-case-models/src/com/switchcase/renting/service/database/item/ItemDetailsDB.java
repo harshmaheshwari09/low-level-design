@@ -9,10 +9,7 @@ import com.switchcase.renting.service.util.ServiceProperty;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 // @Singleton
 public class ItemDetailsDB extends RentingServiceDB {
@@ -81,5 +78,9 @@ public class ItemDetailsDB extends RentingServiceDB {
     @Override
     public String getFileName() {
         return "itemInfo.ser";
+    }
+
+    public Map<String, Item> getItems() {
+        return itemDetailsDB;
     }
 }
