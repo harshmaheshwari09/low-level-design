@@ -4,6 +4,7 @@ import com.switchcase.renting.service.database.item.ItemAvailabilityDB;
 import com.switchcase.renting.service.database.item.ItemTicketsDB;
 import com.switchcase.renting.service.database.ticket.TicketReferenceDB;
 import com.switchcase.renting.service.database.user.UserTicketsDB;
+import com.switchcase.renting.service.model.Ticket;
 import com.switchcase.renting.service.util.CustomRuntimeException;
 
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class ReserveService {
         if (itemAvailabilityDB.isBooked(itemID, bookingDate, numOfDays)) {
             throw CustomRuntimeException.itemNotAvailable();
         }
-        itemAvailabilityDB.updateAvailability(itemID, bookingDate, numOfDays);
+        itemAvailabilityDB.updateAvailability(itemID, bookingDate, numOfDays, true);
 
         // create booking reference
         TicketReferenceDB ticketReferenceDB = TicketReferenceDB.getInstance(serviceProperties);
@@ -41,7 +42,19 @@ public class ReserveService {
         itemTicketsDB.addNewTicket(itemID, ticketID);
     }
 
-    public void returnItem(String userID, String itemID, Date returnDate) {
+    public void returnItem(String userID, String itemID, Date returnDate, Properties serviceProperties)
+        throws IOException, ClassNotFoundException {
+        // start removing entries for corresponding ticket
+        ItemTicketsDB itemTicketsDB = ItemTicketsDB.getInstance(serviceProperties);
+        String ticketID = itemTicketsDB.removeEntry(itemID);
 
+        TicketReferenceDB ticketReferenceDB = TicketReferenceDB.getInstance(serviceProperties);
+        Ticket ticket = ticketReferenceDB.removeTicket(ticketID);
+
+        UserTicketsDB userTicketsDB = UserTicketsDB.getInstance(serviceProperties);
+        userTicketsDB.removeEntry(userID);
+
+        ItemAvailabilityDB itemAvailabilityDB = ItemAvailabilityDB.getInstance(serviceProperties);
+        itemAvailabilityDB.updateAvailability(itemID, ticket.getStartDate(), ticket.getNumOfDays(), false);
     }
 }

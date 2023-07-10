@@ -3,6 +3,7 @@ package com.switchcase.renting.service.database.item;
 import com.switchcase.database.model.Database;
 import com.switchcase.renting.service.database.RentingServiceDB;
 import com.switchcase.renting.service.model.user.Status;
+import com.switchcase.renting.service.util.CustomRuntimeException;
 import com.switchcase.renting.service.util.ServiceProperty;
 
 import java.io.IOException;
@@ -58,5 +59,18 @@ public class ItemTicketsDB extends RentingServiceDB {
 
     public Status getItemStatus(String itemID) {
         return (itemTicketDB.containsKey(itemID) ? Status.NOT_AVAILABLE : Status.AVAILABLE);
+    }
+
+    public String removeEntry(String itemID) throws IOException {
+        String ticketID = itemTicketDB.remove(itemID);
+        Database.storeData(itemTicketDB, getDbLocation());
+        return ticketID;
+    }
+
+    public String getTicketID(String itemID) {
+        if (itemTicketDB.containsKey(itemID)) {
+            return itemTicketDB.get(itemID);
+        }
+        throw CustomRuntimeException.invalidID();
     }
 }

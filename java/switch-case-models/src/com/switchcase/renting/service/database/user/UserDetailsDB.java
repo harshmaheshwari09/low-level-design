@@ -15,30 +15,30 @@ import java.util.Properties;
 public abstract class UserDetailsDB extends RentingServiceDB {
 
 
-    private Map<String, User> userDetails;
+    private Map<String, User> userDetailsDB;
 
     protected UserDetailsDB(Properties serviceProperty) throws IOException, ClassNotFoundException {
         super(serviceProperty);
     }
 
     public User loadUser(String userName) {
-        return userDetails.get(userName);
+        return userDetailsDB.get(userName);
     }
 
     public void registerNewUser(String userName, User user) throws IOException {
         user.buildName();
         user.buildLastName();
         user.buildUserID(userName);
-        userDetails.put(userName, user);
-        Database.storeData(userDetails, getDbLocation());
+        userDetailsDB.put(userName, user);
+        Database.storeData(userDetailsDB, getDbLocation());
     }
 
     @Override
     protected void loadDB(String filePath) throws IOException, ClassNotFoundException {
         if (!Files.isRegularFile(Paths.get(filePath))) {
-            userDetails = new HashMap<>();
+            userDetailsDB = new HashMap<>();
         } else {
-            userDetails = (Map) Database.loadData(filePath);
+            userDetailsDB = (Map) Database.loadData(filePath);
         }
     }
 
@@ -48,6 +48,10 @@ public abstract class UserDetailsDB extends RentingServiceDB {
     }
 
     public boolean isValidID(String userID) {
-        return userDetails.keySet().contains(userID);
+        return userDetailsDB.keySet().contains(userID);
+    }
+
+    public User getUser(String userID) {
+        return userDetailsDB.get(userID);
     }
 }

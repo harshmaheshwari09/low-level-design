@@ -58,4 +58,23 @@ public class TicketReferenceDB extends RentingServiceDB {
         Database.storeData(ticketDetailsDB, getDbLocation());
         return ticketID;
     }
+
+    public Ticket removeTicket(String ticketID) throws IOException {
+        Ticket ticket = ticketDetailsDB.remove(ticketID);
+        Database.storeData(ticketDetailsDB, getDbLocation());
+        return ticket;
+    }
+
+    public boolean isValidRequest(String ticketID, String userID, String itemID) {
+        Ticket ticket = ticketDetailsDB.get(ticketID);
+        return userID.equals(ticket.getUserID()) && itemID.equals(ticket.getItemID());
+    }
+
+    public Ticket getTicket(String ticketID) {
+        return ticketDetailsDB.get(ticketID);
+    }
+
+    public boolean isValidTicket(String ticketID) {
+        return ticketDetailsDB.containsKey(ticketID);
+    }
 }

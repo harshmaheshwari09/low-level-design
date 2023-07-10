@@ -6,7 +6,7 @@ public class Location implements Serializable {
     Integer x;
     Integer y;
     Integer z;
-    private static final long serialVersionUID = 123456789L;
+    private static final long serialVersionUID = 4L;
 
     public Integer getX() {
         return x;

@@ -5,6 +5,7 @@ import com.switchcase.renting.service.database.user.CustomerDetailsDB;
 import com.switchcase.renting.service.database.user.ManagerDetailsDB;
 import com.switchcase.renting.service.database.user.UserDetailsDB;
 import com.switchcase.renting.service.model.service.AdminService;
+import com.switchcase.renting.service.model.service.DisplayService;
 import com.switchcase.renting.service.util.CustomRuntimeException;
 import com.switchcase.renting.service.util.LibraryOperations;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class LibraryManager extends LibraryUser {
+    private static final long serialVersionUID = 124L;
 
     AdminService adminService;
 
@@ -31,15 +33,33 @@ public class LibraryManager extends LibraryUser {
     }
 
     @Override
-    void issueBook(Properties serviceProperty) throws IOException, ClassNotFoundException {
+    void displayUserProfile(Properties serviceProperty) throws IOException, ClassNotFoundException {
+        String userID = getUserId(serviceProperty);
+        DisplayService displayService = DisplayService.getInstance();
+        displayService.displayUserProfile(serviceProperty, userID);
+    }
+
+    @Override
+    void returnBook(Properties serviceProperty) throws IOException, ClassNotFoundException {
+        String userID = getUserId(serviceProperty);
+        returnBook(serviceProperty, userID);
+    }
+
+    private String getUserId(Properties serviceProperty) throws IOException, ClassNotFoundException {
         UserDetailsDB userDetailsDB = CustomerDetailsDB.getInstance(serviceProperty);
-        String userId = ConsoleManager.getUserInput("Enter the userID: ", input -> {
+        String userID = ConsoleManager.getUserInput("Enter the userID: ", input -> {
             if (userDetailsDB.isValidID(input.trim())) {
                 return input.trim();
             }
             throw CustomRuntimeException.invalidID();
         });
-        issueBook(serviceProperty, userId);
+        return userID;
+    }
+
+    @Override
+    void issueBook(Properties serviceProperty) throws IOException, ClassNotFoundException {
+        String userID = getUserId(serviceProperty);
+        issueBook(serviceProperty, userID);
     }
 
     protected void addBook(Properties serviceProperty) throws IOException, ClassNotFoundException {
@@ -67,9 +87,10 @@ public class LibraryManager extends LibraryUser {
     }
 
     protected void blockUser(Properties serviceProperty, Operation operation, boolean shouldBlock) throws IOException, ClassNotFoundException {
+        UserDetailsDB userDetailsDB = getUserDB(serviceProperty);
         String userId = ConsoleManager.getUserInput(String.format("Enter the userId to %s: ", operation), input -> {
-            if (input.length() != 0) {
-                return input;
+            if (input.length() != 0 && userDetailsDB.isValidID(input.trim())) {
+                return input.trim();
             }
             throw CustomRuntimeException.invalidID();
         });

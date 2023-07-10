@@ -3,7 +3,9 @@ package com.switchcase.renting.service.util;
 import com.switchcase.renting.service.model.Operation;
 
 public enum LibraryOperations implements Operation {
-    SHOW_PROFILE,
+    DISPLAY_USER_PROFILE,
+    DISPLAY_TICKET_DETAILS,
+    DISPLAY_BOOK_DETAILS,
     SEARCH_BOOK,
     ISSUE_BOOK,
     RETURN_BOOK,
@@ -19,7 +21,9 @@ public enum LibraryOperations implements Operation {
 
     public static Operation[] getUserOperations() {
         return new Operation[]{
-            SHOW_PROFILE,
+            DISPLAY_USER_PROFILE,
+            DISPLAY_TICKET_DETAILS,
+            DISPLAY_BOOK_DETAILS,
             SEARCH_BOOK,
             ISSUE_BOOK,
             RETURN_BOOK,

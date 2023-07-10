@@ -19,7 +19,7 @@ More questions will be added soon. Stay tuned!
 
 ---
 
-## Good Reads: 
+## Good Reads:
 
 * [Design Patterns](https://refactoring.guru/design-patterns)
 

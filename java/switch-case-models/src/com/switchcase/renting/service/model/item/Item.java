@@ -17,7 +17,7 @@ public abstract class Item implements Serializable {
     protected Date dateOfProduction;
     protected Location location;
     protected Type type;
-    private static final long serialVersionUID = 123456789L;
+    private static final long serialVersionUID = 2L;
 
     public String getTitle() {
         return title;
@@ -65,4 +65,6 @@ public abstract class Item implements Serializable {
     public void setProducers(Set<String> producers) {
         this.producers = producers;
     }
+
+    abstract public void showDetails();
 }

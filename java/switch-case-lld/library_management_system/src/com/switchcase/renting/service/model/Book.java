@@ -7,6 +7,7 @@ import com.switchcase.renting.service.model.user.Status;
 import com.switchcase.renting.service.util.Genre;
 
 public class Book extends Item {
+    private static final long serialVersionUID = 21L;
 
     public static Book createNewBook() {
         return new Book().buildTitle().buildAuthers().buildDateOfPublication().buildGenreAndLocation();
@@ -41,5 +42,15 @@ public class Book extends Item {
         ConsoleManager.print(String.format(
             "\n| %-7s | %-20s | %-20s | %-18tF | %-8s | %-8d | %-12s | ",
             bookId, this.title, this.producers, this.dateOfProduction, this.type, this.location.getX(), bookStatus));
+    }
+
+    @Override
+    public void showDetails() {
+        ConsoleManager.print("======== BOOK DETAILS : ======\n");
+        ConsoleManager.print(String.format("Title : %s\n", title));
+        ConsoleManager.print(String.format("Authers : %s\n", producers));
+        ConsoleManager.print(String.format("Date of Publication: %tF\n", dateOfProduction));
+        ConsoleManager.print(String.format("Genre: %s\n", type));
+        ConsoleManager.print(String.format("Location: %s\n", location.getX()));
     }
 }

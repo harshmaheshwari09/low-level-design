@@ -55,4 +55,16 @@ public class UserTicketsDB extends RentingServiceDB {
         Database.storeData(userTicketDB, getDbLocation());
 
     }
+
+    public void removeEntry(String userID) throws IOException {
+        userTicketDB.remove(userID);
+        Database.storeData(userTicketDB, getDbLocation());
+    }
+
+    public Set<String> getTicketIDs(String userID) {
+        if (!userTicketDB.containsKey(userID)) {
+            userTicketDB.put(userID, new HashSet<>());
+        }
+        return userTicketDB.get(userID);
+    }
 }

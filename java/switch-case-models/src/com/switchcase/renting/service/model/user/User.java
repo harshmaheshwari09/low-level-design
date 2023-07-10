@@ -13,7 +13,7 @@ public abstract class User implements Serializable {
     protected String userID;
     protected String name;
     protected String lastName;
-    private static final long serialVersionUID = 123456789L;
+    private static final long serialVersionUID = 1L;
 
     public abstract UserDetailsDB getUserDB(Properties serviceProperties) throws IOException, ClassNotFoundException;
 
@@ -71,5 +71,10 @@ public abstract class User implements Serializable {
 
     public void buildUserID(String userName) {
         this.userID = userName;
+    }
+
+    public void printDetails() {
+        ConsoleManager.print(String.format("UserID : %s\n", userID));
+        ConsoleManager.print(String.format("Name : %s %s\n", name, lastName));
     }
 }

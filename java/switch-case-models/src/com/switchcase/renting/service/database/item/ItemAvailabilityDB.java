@@ -47,11 +47,11 @@ public class ItemAvailabilityDB extends RentingServiceDB {
         }
     }
 
-    public void updateAvailability(String itemID, Date bookingDate, int numOfDays) throws IOException {
+    public void updateAvailability(String itemID, Date bookingDate, int numOfDays, boolean status) throws IOException {
         int startDay = getStartDay(bookingDate);
         boolean[] calendar = itemAvailabilityDB.get(itemID);
         for (int idx = startDay; idx < startDay + numOfDays; idx++) {
-            calendar[idx] = true;
+            calendar[idx] = status;
         }
         itemAvailabilityDB.put(itemID, calendar);
         Database.storeData(itemAvailabilityDB, getDbLocation());

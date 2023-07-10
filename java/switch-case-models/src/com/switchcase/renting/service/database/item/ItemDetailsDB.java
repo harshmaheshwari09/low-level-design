@@ -49,13 +49,12 @@ public class ItemDetailsDB extends RentingServiceDB {
         return itemID;
     }
 
-    public Item removeItem(String itemID) throws IOException {
+    public void removeItem(String itemID) throws IOException {
         if (!itemDetailsDB.containsKey(itemID)) {
             throw CustomRuntimeException.invalidID();
         }
-        Item removedItem = itemDetailsDB.remove(itemID);
+        itemDetailsDB.remove(itemID);
         Database.storeData(itemDetailsDB, getDbLocation());
-        return removedItem;
     }
 
     @Override
@@ -74,5 +73,9 @@ public class ItemDetailsDB extends RentingServiceDB {
 
     public boolean isValidItemID(String itemID) {
         return itemDetailsDB.keySet().contains(itemID);
+    }
+
+    public Item getItem(String itemID) {
+        return itemDetailsDB.get(itemID);
     }
 }
