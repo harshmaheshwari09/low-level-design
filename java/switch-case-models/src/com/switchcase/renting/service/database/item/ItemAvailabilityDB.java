@@ -51,7 +51,7 @@ public class ItemAvailabilityDB extends RentingServiceDB {
         int startDay = getStartDay(bookingDate);
         boolean[] calendar = itemAvailabilityDB.get(itemID);
         for (int idx = startDay; idx < startDay + numOfDays; idx++) {
-            calendar[idx] = status;
+            calendar[idx % 1461] = status;
         }
         itemAvailabilityDB.put(itemID, calendar);
         Database.storeData(itemAvailabilityDB, getDbLocation());
@@ -88,7 +88,7 @@ public class ItemAvailabilityDB extends RentingServiceDB {
         }
         boolean[] calendar = itemAvailabilityDB.get(itemID);
         for (int idx = startDay; idx < startDay + numOfDays; idx++) {
-            if (calendar[idx]) {
+            if (calendar[idx % 1461]) {
                 return true;
             }
         }
