@@ -13,7 +13,9 @@ This section provides an overview of the questions included in the repository. E
 corresponding code implementation.
 
 1. General Game Design: [JAVA](java/switch-case-models/src/com/switchcase/games)
-2. Tic Tac Toe: [JAVA](java/switch-case-lld/tic_tac_toe)
+   * Tic Tac Toe: [JAVA](java/switch-case-lld/tic_tac_toe)
+2. Renting Service Design: [JAVA](java/switch-case-models/src/com/switchcase/renting/service)
+   * Library Management System: [JAVA](java/switch-case-lld/library_management_system)
 
 More questions will be added soon. Stay tuned!
 

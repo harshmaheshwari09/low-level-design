@@ -41,7 +41,7 @@ public abstract class LibraryUser extends User {
             // reserve service
             case ISSUE_BOOK -> issueBook(serviceProperty);
             case RETURN_BOOK -> returnBook(serviceProperty);
-            case RE_ISSUE_BOOK -> System.out.println("reserve service: " + operation);
+            case RE_ISSUE_BOOK -> reissueBook(serviceProperty);
 
             // admin service
             case ADD_BOOK -> addBook(serviceProperty);
@@ -49,6 +49,11 @@ public abstract class LibraryUser extends User {
             case BLOCK_USER -> blockUser(serviceProperty, operation, true);
             case UNBLOCK_USER -> blockUser(serviceProperty, operation, false);
         }
+    }
+
+    private void reissueBook(Properties serviceProperty) throws IOException, ClassNotFoundException {
+        returnBook(serviceProperty);
+        issueBook(serviceProperty);
     }
 
     private void displayBookDetails(Properties serviceProperty) throws IOException, ClassNotFoundException {
